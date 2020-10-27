@@ -19,17 +19,18 @@ const classes: { [key: string]: string } = {
 }
 
 const DEVNULL = "https://devnull-as-a-service.com/dev/null";
+const PREFIX = process.env.NODE_ENV === "development" ? "" : "https://twitter.www.statshelix.com"
 
 const pairs = [
   [
     "Bakerloo",
     "Northern",
-    "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637628518223872"
+    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637628518223872"
   ],
   [
     "Jubilee",
     "TfL Rail",
-    "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637979858247680"
+    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637979858247680"
   ],
   [
     "Central",
