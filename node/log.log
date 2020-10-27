@@ -124,3 +124,11 @@
 {"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:30:08.104Z","moduleName":"server"}
 {"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:30:17.787Z","moduleName":"server"}
 {"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:30:28.034Z","moduleName":"server"}
+{"message":"Starting server...","level":"info","timestamp":"2020-10-27T23:40:30.221Z","moduleName":"server"}
+{"message":"Starting updater...","level":"info","timestamp":"2020-10-27T23:40:30.239Z","moduleName":"server"}
+{"message":"Watching for updates...","level":"info","timestamp":"2020-10-27T23:40:30.247Z","moduleName":"server"}
+{"message":"Listenning on port 6000","level":"info","timestamp":"2020-10-27T23:40:30.253Z","moduleName":"server"}
+{"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:41:30.509Z","moduleName":"server"}
+{"message":"File updated!","level":"info","timestamp":"2020-10-27T23:41:35.343Z","moduleName":"server"}
+{"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:42:30.447Z","moduleName":"server"}
+{"message":"File updated!","level":"info","timestamp":"2020-10-27T23:42:35.435Z","moduleName":"server"}

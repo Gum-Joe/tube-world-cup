@@ -99,6 +99,10 @@ async function updateTweets() {
 			})
 		} else {
 			results.matches.map((element) => {
+				if ((Data.now() - element.startTime) > 24 * 60 * 60) {
+					// If more than 24 hrs have passed, don't update
+					return element;
+				}
 				if (element.one === result.one.name && element.two === result.two.name) {
 					// Add this result
 					element.results.push({
@@ -121,7 +125,7 @@ async function updateTweets() {
 
 logger.info("Watching for updates...");
 // Update once a minute
-const CHANGE_TIME = 60000;
+const CHANGE_TIME = 30000;
 setInterval(updateTweets, CHANGE_TIME);
 
 let resultsFile;
