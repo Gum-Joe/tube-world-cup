@@ -16,7 +16,7 @@ const classes: { [key: string]: string } = {
   "Central": "central",
   "District": "district",
   "Circle": "circle",
-  "Thames Link": "thameslink"
+  "Thameslink": "thameslink"
 }
 
 const colours: { [key: string]: string } = {
@@ -27,7 +27,7 @@ const colours: { [key: string]: string } = {
   "Central": "rgb(220, 36, 31)",
   "District": "rgb(0, 125, 50)",
   "Circle": "rgb(255, 211, 41)",
-  "Thames Link": "#E9438D"
+  "Thameslink": "#E9438D"
 }
 
 const DEVNULL = "https://devnull-as-a-service.com/dev/null";
@@ -54,7 +54,7 @@ const pairs = [
   ],
   [
     "Circle",
-    "Thames Link",
+    "Thameslink",
     PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321002110801108993",
     "true",
   ]
@@ -104,7 +104,7 @@ class App extends Component<any, { results: StateInfo[] }> {
   componentDidMount() {
     this.updateResults();
     const bound = this.updateResults.bind(this);
-    setInterval(() => bound(), 45000);
+    setInterval(() => bound(), 20000);
   }
 
   updateResults() {
@@ -164,7 +164,7 @@ class App extends Component<any, { results: StateInfo[] }> {
       <div className="App">
         <div className="header">
           <h1>Tube Lines World Cup:</h1>
-          <h5>Updated every 45 secs. Please view in landscape.</h5>
+          <h5>Updated every 20 secs. Please view in landscape.</h5>
         </div>
         <h3>Knockout stage games:</h3>
         <Table striped bordered responsive>
