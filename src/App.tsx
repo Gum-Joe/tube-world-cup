@@ -35,12 +35,12 @@ const pairs = [
   [
     "Central",
     "District",
-    DEVNULL
+    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321001660479639552"
   ],
   [
     "Circle",
     "Thames Link",
-    DEVNULL
+    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321002110801108993"
   ]
 ]
 
@@ -69,6 +69,12 @@ class App extends Component<any, { results: StateInfo[] }> {
   }
 
   componentDidMount() {
+    this.updateResults();
+    const bound = this.updateResults.bind(this);
+    setInterval(() => bound(), 15000);
+  }
+
+  updateResults() {
     const newPairs: Promise<StateInfo>[] = pairs.map(async (tuple): Promise<StateInfo> => {
       let one: number = 0;
       let two: number = 0;
@@ -92,7 +98,7 @@ class App extends Component<any, { results: StateInfo[] }> {
           const twoHere = splitted[1].match(/^\d+|\d+\b|\d+(?=\w)/g) || ["0"];
           two = parseInt(twoHere[0], 10);
           if (twoHere.length > 1 && twoHere[1] === "1") {
-            winner = 1;
+            winner = 2;
           }
 
         }
@@ -123,7 +129,10 @@ class App extends Component<any, { results: StateInfo[] }> {
   render() {
     return (
       <div className="App">
-        <h1>Tube Lines World Cup:</h1>
+        <div className="header">
+          <h1>Tube Lines World Cup:</h1>
+          <h5>Updated every 15 secs</h5>
+        </div>
         <h3>Knockout stage games:</h3>
         <Table striped bordered responsive>
           <thead>
