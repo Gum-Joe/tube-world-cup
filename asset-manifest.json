@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tube-world-cup/static/css/main.35c7a5d5.chunk.css",
-    "main.js": "/tube-world-cup/static/js/main.0890618f.chunk.js",
-    "main.js.map": "/tube-world-cup/static/js/main.0890618f.chunk.js.map",
+    "main.js": "/tube-world-cup/static/js/main.f5ef607b.chunk.js",
+    "main.js.map": "/tube-world-cup/static/js/main.f5ef607b.chunk.js.map",
     "runtime-main.js": "/tube-world-cup/static/js/runtime-main.de0c10a9.js",
     "runtime-main.js.map": "/tube-world-cup/static/js/runtime-main.de0c10a9.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/tube-world-cup/static/css/2.20aa2d7b.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.20aa2d7b.chunk.css",
     "static/js/2.37afe8e0.chunk.js",
     "static/css/main.35c7a5d5.chunk.css",
-    "static/js/main.0890618f.chunk.js"
+    "static/js/main.f5ef607b.chunk.js"
   ]
 }
