@@ -48,7 +48,7 @@ const colours: { [key: string]: string } = {
 }
 
 const DEVNULL = "https://devnull-as-a-service.com/dev/null";
-const PREFIX = "https://gentle-wildflower-0e5e.kishansambhi.workers.dev/?https://twitter.www.statshelix.com"
+const PREFIX = "https://twitter.www.statshelix.com"
 
 const pairs = [
   [
