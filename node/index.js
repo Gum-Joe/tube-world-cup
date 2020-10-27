@@ -121,7 +121,7 @@ async function updateTweets() {
 
 logger.info("Watching for updates...");
 // Update once a minute
-const CHANGE_TIME = 10000;
+const CHANGE_TIME = 60000;
 setInterval(updateTweets, CHANGE_TIME);
 
 let resultsFile;
