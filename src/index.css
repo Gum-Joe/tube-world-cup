@@ -13,8 +13,12 @@ code {
 }
 
 .App {
-  background-color: #212121;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: rgb(0, 25, 168);
+}
+
+table {
+  color: rgb(0, 25, 168) !important;
 }
 
 html, body, #root, .App {
@@ -25,33 +29,40 @@ html, body, #root, .App {
 
 .bakerloo {
   background-color:	#B36305;
+  color: #ffffff;
 }
 
 .northern {
   background-color:	#000000;
+  color: #ffffff;
 }
 
 .tflrail {
   background-color: rgb(0, 25, 168);
+  color: #ffffff;
 }
 
 .jubilee {
   background-color: 	#A0A5A9;
+  color: #ffffff;
 }
 
 .central {
   background-color: rgb(220, 36, 31);
+  color: #ffffff;
 }
+
 .district {
   background-color: rgb(0, 125, 50);
+  color: #ffffff;
 }
 .circle {
   background-color: rgb(255, 211, 41);
   color: #000000;
 }
 .thameslink {
-  background-color: #ffffff;
-  color: #000000
+  background-color: #E9438D;
+  color: #ffffff;
 }
 
 tr {

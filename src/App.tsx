@@ -76,7 +76,7 @@ class App extends Component<any, { results: StateInfo[] }> {
       try {
         if (tuple[2] !== DEVNULL) {
           // Can get it
-          const res = await fetch(tuple[2], { mode: "no-cors" });
+          const res = await fetch(tuple[2]);
 
           const resBody = await res.text();
           console.log(resBody);
@@ -124,7 +124,8 @@ class App extends Component<any, { results: StateInfo[] }> {
     return (
       <div className="App">
         <h1>Tube Lines World Cup:</h1>
-        <Table striped bordered variant="dark" responsive>
+        <h3>Knockout stage games:</h3>
+        <Table striped bordered responsive>
           <thead>
             <tr>
               <th>Line 1</th>
@@ -142,10 +143,14 @@ class App extends Component<any, { results: StateInfo[] }> {
                   <tr>
                     <td className={result.one.className}>{result.one.name} { result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle}/> : "" }</td>
                     <td>{result.one.votes}</td>
-                    <td>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
+                    <td style={{
+                      "backgroundSize": `100% ${((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
+                    }} className={result.one.className}>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
                     <td className={result.two.className}>{result.two.name} {result.winner === 2 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
                     <td>{result.two.votes}</td>
-                    <td>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
+                    <td style={{
+                      "backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
+                    }} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
                   </tr>
                 )
               })
