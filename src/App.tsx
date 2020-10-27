@@ -104,7 +104,7 @@ class App extends Component<any, { results: StateInfo[] }> {
   componentDidMount() {
     this.updateResults();
     const bound = this.updateResults.bind(this);
-    //setInterval(() => bound(), 30000);
+    setInterval(() => bound(), 45000);
   }
 
   updateResults() {
@@ -164,7 +164,7 @@ class App extends Component<any, { results: StateInfo[] }> {
       <div className="App">
         <div className="header">
           <h1>Tube Lines World Cup:</h1>
-          <h5>Updated every 30 secs. Please view in landscape.</h5>
+          <h5>Updated every 45 secs. Please view in landscape.</h5>
         </div>
         <h3>Knockout stage games:</h3>
         <Table striped bordered responsive>
