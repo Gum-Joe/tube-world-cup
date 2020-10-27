@@ -65,6 +65,44 @@ html, body, #root, .App {
   color: #ffffff;
 }
 
+.handc {
+  color: #ffffff;
+  background-color: rgb(244, 169, 190);
+}
+.victoria {
+  color: #ffffff;
+  background-color: rgb(0, 152, 216);
+}
+.metropolitan {
+  color: #ffffff;
+  background-color: rgb(155, 0, 88);
+}
+.trams {
+  color: #ffffff;
+  background-color: rgb(0, 189, 25);
+}
+.overground {
+  color: #ffffff;
+  background-color: rgb(239, 123, 16);
+}
+.cablecar {
+  background-color: rgb(220, 36, 31);
+  color: #ffffff;
+}
+.dlr {
+  color: #ffffff;
+  background-color: rgb(0, 175, 173);
+}
+.picadilly {
+  color: #ffffff;
+  background-color: rgb(0, 25, 168);
+}
+
+.unknown {
+  color: #ffffff;
+  background-color: rgb(65, 75, 86);
+}
+
 tr {
   font-weight: 600;
 }
