@@ -99,7 +99,7 @@ async function updateTweets() {
 			})
 		} else {
 			results.matches.map((element) => {
-				if ((Data.now() - element.startTime) > 24 * 60 * 60) {
+				if ((Date.now() - element.startTime) > 24 * 60 * 60) {
 					// If more than 24 hrs have passed, don't update
 					return element;
 				}

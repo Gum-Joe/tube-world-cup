@@ -132,3 +132,7 @@
 {"message":"File updated!","level":"info","timestamp":"2020-10-27T23:41:35.343Z","moduleName":"server"}
 {"message":"Adjustments done.","level":"info","timestamp":"2020-10-27T23:42:30.447Z","moduleName":"server"}
 {"message":"File updated!","level":"info","timestamp":"2020-10-27T23:42:35.435Z","moduleName":"server"}
+{"message":"Starting server...","level":"info","timestamp":"2020-10-27T23:44:01.693Z","moduleName":"server"}
+{"message":"Starting updater...","level":"info","timestamp":"2020-10-27T23:44:01.694Z","moduleName":"server"}
+{"message":"Watching for updates...","level":"info","timestamp":"2020-10-27T23:44:01.695Z","moduleName":"server"}
+{"message":"Listenning on port 6000","level":"info","timestamp":"2020-10-27T23:44:01.700Z","moduleName":"server"}
