@@ -1,3 +1,5 @@
+I hacked this together in about 1.5 hrs!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

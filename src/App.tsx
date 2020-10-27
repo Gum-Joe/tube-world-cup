@@ -19,7 +19,7 @@ const classes: { [key: string]: string } = {
 }
 
 const DEVNULL = "https://devnull-as-a-service.com/dev/null";
-const PREFIX = process.env.NODE_ENV === "development" ? "" : "https://twitter.www.statshelix.com"
+const PREFIX = "https://gentle-wildflower-0e5e.kishansambhi.workers.dev/?https://twitter.www.statshelix.com"
 
 const pairs = [
   [
@@ -79,6 +79,8 @@ class App extends Component<any, { results: StateInfo[] }> {
           const res = await fetch(tuple[2], { mode: "no-cors" });
 
           const resBody = await res.text();
+          console.log(resBody);
+          console.log(res.status);
           // Assume pairs in correct order
           const splitted = resBody.split("\n");
           const oneHere = splitted[0].match(/^\d+|\d+\b|\d+(?=\w)/g) || ["0"];
