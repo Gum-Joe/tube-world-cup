@@ -119,6 +119,7 @@ async function updateTweets() {
 				}
 				if (element.one === result.one.name && element.two === result.two.name) {
 					// Add this result
+					logger.info(`Updated the ${result.one.name} vs ${result.two.name}`)
 					element.results.push({
 						time: Date.now(),
 						votes: {
@@ -134,7 +135,8 @@ async function updateTweets() {
 	});
 
 	logger.info("Adjustments done.");
-	await fs.writeFile(RESULTS, JSON.stringify(results, null, "\t"));
+	const fd = await fs.writeFile(RESULTS, JSON.stringify(results, null, "\t"));
+	logger.debug("File written.");
 }
 
 logger.info("Watching for updates...");

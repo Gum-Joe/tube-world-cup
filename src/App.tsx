@@ -312,6 +312,8 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                     }
                   });
                 }
+
+                console.log(oneVotes);
             
                 return (
                   <Row>
