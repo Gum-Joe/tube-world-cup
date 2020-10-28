@@ -8,7 +8,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "rec
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine } from "victory";
 
 
-const REALTIME_RESULTS = "http://tubelinecomp.gumjoe.com/api/get/tube-results";
+const REALTIME_RESULTS = "https://gentle-wildflower-0e5e.kishansambhi.workers.dev/?http://tubelinecomp.gumjoe.com/api/get/tube-results";
 
 const classes: { [key: string]: string } = {
   "Bakerloo": "bakerloo",
