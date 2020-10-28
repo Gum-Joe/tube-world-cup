@@ -110,10 +110,11 @@ const quarterfinals = [
     "Waterloo"
   ],
   [
-    "???",
-    "???",
+    "District",
+    "Thameslink",
     DEVNULL,
     "false",
+    "Blackfriars"
   ],
   [
     "???",
