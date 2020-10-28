@@ -90,6 +90,8 @@ async function updateTweets() {
 		}
 	}));
 
+	console.log(newResults);
+
 	// Next, load resulkts
 	const results = JSON.parse((await fs.readFile(RESULTS)).toString());
 	newResults.forEach((result) => {
