@@ -51,6 +51,7 @@ const colours: { [key: string]: string } = {
 
 const DEVNULL = "https://devnull-as-a-service.com/dev/null";
 const PREFIX = "https://twitter.www.statshelix.com"
+const FULL_PREFIX = PREFIX + "/api/Tweet/GetTweet?url=";
 
 const pairs = [
   [
@@ -92,13 +93,13 @@ const pairs = [
   [
     "Overground",
     "CableCar",
-    DEVNULL,
+    DEVNULL, // FULL_PREFIX + URL
     "false" // CHANGEME
   ],
   [
     "DLR",
     "Piccadilly",
-    DEVNULL,
+    DEVNULL, // FULL_PREFIX + URL
     "false" // CHANGEME
   ]
 ]

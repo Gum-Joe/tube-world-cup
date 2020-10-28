@@ -11,6 +11,7 @@ const logger = createLogger("server");
 const app = express();
 
 const PREFIX = "https://twitter.www.statshelix.com"
+const FULL_PREFIX = PREFIX + "/api/Tweet/GetTweet?url=";
 
 const tweets = [
 	PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637628518223872",
@@ -19,6 +20,7 @@ const tweets = [
 	PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321002110801108993",
 	PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321364991803621376",
 	PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321365302811217923",
+	// FULL_PREFIX + "..."
 ]
 
 app.use(helmet());
