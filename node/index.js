@@ -38,6 +38,7 @@ logger.info("Starting server...");
 logger.info("Starting updater...");
 
 async function updateTweets() {
+	logger.info("BEING UPDATE");
 	const newResults = await Promise.all(tweets.map(async (url) => {
 		const res = await superagent
 			.get(url);
