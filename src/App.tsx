@@ -412,14 +412,14 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                         />
                         <VictoryLine
                           style={{
-                            data: { stroke: colours[result.one.name] },
+                            data: { stroke: colours[result.one.name], strokeWidth: 5 },
                             parent: { border: "1px solid #ccc" }
                           }}
                           data={oneVotes}
                         />
                         <VictoryLine
                           style={{
-                            data: { stroke: colours[result.two.name] },
+                            data: { stroke: colours[result.two.name], strokeWidth: 5 },
                             parent: { border: "1px solid #ccc" }
                           }}
                           data={twoVotes}

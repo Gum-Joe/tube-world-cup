@@ -117,6 +117,8 @@ async function updateTweets() {
 					// If more than 24 hrs have passed, don't update
 					return element;
 				}
+				logger.debug(element.one);
+				logger.debug(element.two);
 				if (element.one === result.one.name && element.two === result.two.name) {
 					// Add this result
 					logger.info(`Updated the ${result.one.name} vs ${result.two.name}`)
