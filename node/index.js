@@ -118,9 +118,10 @@ async function updateTweets() {
 			})
 		} else {
 			results.matches.map((element) => {
-				logger.info(`Updating 1`);
 				if ((Date.now() - element.startTime) > 24 * 60 * 60) {
 					// If more than 24 hrs have passed, don't update
+					logger.debug(`More than 24 hrs have passed for ${element.one} vs ${element.two}`);
+					logger.debug(`${(Date.now() - element.startTime) > 24 * 60 * 60}`);
 					return element;
 				}
 				logger.debug(element.one);
