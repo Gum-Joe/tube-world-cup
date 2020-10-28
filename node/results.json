@@ -475,6 +475,34 @@
 					}
 				}
 			]
+		},
+		{
+			"one": "H&C Line",
+			"two": "Victoria Line",
+			"startTime": 1603880907410,
+			"results": [
+				{
+					"time": 1603880907410,
+					"votes": {
+						"one": 835,
+						"two": 1727
+					}
+				}
+			]
+		},
+		{
+			"one": "Metropolitan Line",
+			"two": "Trams",
+			"startTime": 1603880907411,
+			"results": [
+				{
+					"time": 1603880907411,
+					"votes": {
+						"one": 2104,
+						"two": 1152
+					}
+				}
+			]
 		}
 	]
 }

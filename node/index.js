@@ -64,14 +64,25 @@ async function updateTweets() {
 		if (twoHere.length > 1 && twoHere[1] === "1") {
 			winner = 2;
 		}
+		
+		let oneName = splitted[0].split(":")[0].trim();
+		let twoName = splitted[1].split(":")[0].trim();
+
+		if (oneName === "Hammersmith & City Line") {
+			oneName = "H&C Line";
+		}
+
+		if (twoName === "Hammersmith & City Line") {
+			twoName = "H&C Line";
+		}
 
 		return {
 			one: {
-				name: splitted[0].split(":")[0].trim(),
+				name: oneName,
 				votes: one,
 			},
 			two: {
-				name: splitted[1].split(":")[0].trim(),
+				name: twoName,
 				votes: two,
 			},
 			winner,
@@ -127,6 +138,7 @@ async function updateTweets() {
 }
 
 logger.info("Watching for updates...");
+updateTweets();
 // Update once a minute
 const CHANGE_TIME = 30000;
 setInterval(updateTweets, CHANGE_TIME);
