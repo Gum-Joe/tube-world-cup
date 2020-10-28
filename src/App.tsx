@@ -415,6 +415,49 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                             ticks: { stroke: "grey" },
                           }}
                         />
+                        {/* If Picadilly and DLR, PLOT */}
+                        {
+                          result.one.name === "Piccadilly" && result.two.name === "DLR" ?
+                            // DLR
+                            <VictoryLine
+                              style={{
+                                data: { stroke: colours["DLR"], strokeWidth: 3 },
+                                parent: { border: "1px solid #ccc" }
+                              }}
+                              data={[
+                                {
+                                  x: 0,
+                                  y: 1711
+                                },
+                                {
+                                  x: (twoVotes[twoVotes.length - 1] || { x: 0 }).x,
+                                  y: 1711
+                                }
+                              ]}
+                            />
+                            : null
+                        }
+                        {
+                          result.one.name === "Piccadilly" && result.two.name === "DLR" ?
+                            // DLR
+                            <VictoryLine
+                              style={{
+                                data: { stroke: colours["Piccadilly"], strokeWidth: 3 },
+                                parent: { border: "1px solid #ccc" }
+                              }}
+                              data={[
+                                {
+                                  x: 0,
+                                  y: 1882
+                                },
+                                {
+                                  x: (twoVotes[twoVotes.length - 1] || { x: 0 }).x,
+                                  y: 1882
+                                }
+                              ]}
+                            />
+                            : null
+                        }
                         <VictoryLine
                           style={{
                             data: { stroke: colours[result.one.name], strokeWidth: 5 },
