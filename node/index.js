@@ -91,7 +91,7 @@ async function updateTweets() {
 		}
 	}));
 
-	console.log(newResults);
+	//console.log(newResults);
 
 	// Next, load resulkts
 	const results = JSON.parse((await fs.readFile(RESULTS)).toString());
@@ -99,6 +99,7 @@ async function updateTweets() {
 		const filtered = results.matches.filter(element => {
 			return (element.one === result.one.name) && (element.two === result.two.name)
 		});
+		console.log(filtered);
 		if (filtered.length === 0) {
 			// Add
 			logger.info(`Adding match ${result.one.name} vs ${result.two.name}`)
