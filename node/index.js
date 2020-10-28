@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const { createLogger } = require("./logger");
 const superagent = require("superagent");
 const { promises: fs, watchFile } = require("fs");
+const cors = require("cors");
 
 const logger = createLogger("server");
 
@@ -136,7 +137,7 @@ watchFile(RESULTS, { persistent: false }, () => {
 	logger.info("File updated!");
 })
 
-app.get("/api/get/tube-results", (req, res) => {
+app.get("/api/get/tube-results", cors(), (req, res) => {
 	res.statusCode = 200;
 	res.json(resultsFile);
 	res.end();
