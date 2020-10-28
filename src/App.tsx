@@ -93,11 +93,13 @@ const pairs = [
     "Overground",
     "CableCar",
     DEVNULL,
+    "false" // CHANGEME
   ],
   [
     "DLR",
     "Piccadilly",
-    DEVNULL
+    DEVNULL,
+    "false" // CHANGEME
   ]
 ]
 
@@ -249,6 +251,7 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
         <div className="header">
           <h1>Tube Lines World Cup:</h1>
           <h5>Updated every 20 secs. Please view in landscape.</h5>
+          <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
         <h3>Knockout stage games:</h3>
         <Table striped bordered responsive>
