@@ -99,7 +99,8 @@ async function updateTweets() {
 		const filtered = results.matches.filter(element => {
 			return (element.one === result.one.name) && (element.two === result.two.name)
 		});
-		console.log(filtered);
+		//console.log(filtered);
+		//console.log(results.matches);
 		if (filtered.length === 0) {
 			// Add
 			logger.info(`Adding match ${result.one.name} vs ${result.two.name}`)
@@ -117,6 +118,7 @@ async function updateTweets() {
 			})
 		} else {
 			results.matches.map((element) => {
+				logger.info(`Updating 1`);
 				if ((Date.now() - element.startTime) > 24 * 60 * 60) {
 					// If more than 24 hrs have passed, don't update
 					return element;
@@ -136,7 +138,7 @@ async function updateTweets() {
 				} else {
 					return element;
 				}
-			})
+			});
 		}
 	});
 
