@@ -5,8 +5,10 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheckCircle, faTicketAlt } from "@fortawesome/free-solid-svg-icons";
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
-import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis } from "victory";
+import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine } from "victory";
 
+
+const REALTIME_RESULTS = "http://tubelinecomp.gumjoe.com/api/get/tube-results";
 
 const classes: { [key: string]: string } = {
   "Bakerloo": "bakerloo",
@@ -142,22 +144,7 @@ interface StateInfo {
   venue?: string;
 }
 
-class CustomizedLabel extends Component<{ [key:string]: any }> {
-
-  render() {
-    const { x, y, fill, value } = this.props;
-    return <text
-      x={x}
-      y={y}
-
-      fontSize='16'
-      fontFamily='sans-serif'
-      fill={fill}
-      textAnchor="start">{value}%</text>
-  }
-};
-
-class App extends Component<any, { results: StateInfo[], resultsQFinals: StateInfo[] }> {
+class App extends Component<any, { results: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: any[] }> {
 
   constructor(props: any) {
     super(props);
@@ -165,13 +152,32 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
     this.state = {
       results: [],
       resultsQFinals: [],
+      resultsHistories: [],
     }
+  }
+
+  async updateHistory() {
+    console.log("FITOWRST");
+    const history = await fetch(REALTIME_RESULTS)
+    this.setState({
+      resultsHistories: (await history.json()).matches
+    })
+    console.log("FIRST");
   }
 
   componentDidMount() {
     this.updateResults();
+    this.updateHistory();
     const bound = this.updateResults.bind(this);
     setInterval(() => bound(), 20000);
+
+    setInterval(async () => {
+      const history = await (await fetch(REALTIME_RESULTS)).json();
+      const matches = history.matches;
+      this.setState({
+        resultsHistories: history.matches
+      })
+    }, 120000)
   }
 
   async getUpdates(tuple: string[]): Promise<StateInfo> {
@@ -197,7 +203,6 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
         if (twoHere.length > 1 && twoHere[1] === "1") {
           winner = 2;
         }
-
       }
     } catch (err) {
       console.log(err.stack);
@@ -281,72 +286,146 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
         
         <h3>Today's games:</h3>
         <Container>
-          <Row>
             {
               this.state.results.filter(result => result.today).map((result) => {
+
+                const historydata = this.state.resultsHistories.filter(element => {
+                  return (element.one === (result.one.name !== "Thameslink" ? result.one.name + " Line" : result.one.name)) && (element.two === (result.two.name !== "Thameslink" ? result.two.name + " Line" : result.two.name))
+                })[0];
+                let oneVotes = [];
+                let twoVotes = [];
+                if (typeof historydata !== "undefined") {
+                  // Fix
+                  oneVotes = historydata.results.map((resultHere: any) => {
+                    console.log(resultHere.time - historydata.startTime);
+                    return {
+                      x: (resultHere.time - historydata.startTime) / 1000 / 60 / 60,
+                      y: resultHere.votes.one
+                    }
+                  });
+                  twoVotes = historydata.results.map((resultHere: any) => {
+                    return {
+                      x: (resultHere.time - historydata.startTime) / 1000 / 60 / 60,
+                      y: resultHere.votes.two
+                    }
+                  });
+                }
             
                 return (
-                  <Col sm md lg>
-                    <VictoryChart
-                      horizontal={true}
-                      domainPadding={{ x: 100 }}
-                      categories={{ x: [result.one.name, result.two.name] }}
-                      height={350}
-                      //width={500}
-                      padding={{
-                        top:0,
-                        bottom: 80,
-                        right: 10,
-                        left: 10
-                      }}
-                    >
-                      <VictoryAxis
-                        dependentAxis
-                        label="Votes"
-                        fixLabelOverlap
-                        style={{
-                          axis: { stroke: "#756f6a" },
-                          axisLabel: { fontSize: 30, padding: 30 },
-                          tickLabels: { fontSize: 20, padding: 5 },
-                          grid: { stroke: "grey" },
-                          ticks: { stroke: "grey" },
+                  <Row>
+                    <Col sm md lg>
+                      <VictoryChart
+                        horizontal={true}
+                        domainPadding={{ x: 100 }}
+                        categories={{ x: [result.one.name, result.two.name] }}
+                        height={350}
+                        width={500}
+                        padding={{
+                          top:0,
+                          bottom: 80,
+                          right: 10,
+                          left: 10
                         }}
-                      />
-                      <VictoryBar
-                        style={{
-                          data: { fill: ({datum}) => {
-                            console.log(datum.xName);
-                            console.log(colours[datum.xName]);
-                            return colours[datum.xName];
-                          }, width: 60 }, labels: {
-                            fill: "#ffffff",
-                            fontSize: 30,
-                          }
+                      >
+                        <VictoryAxis
+                          dependentAxis
+                          label="Votes"
+                          fixLabelOverlap
+                          style={{
+                            axis: { stroke: "#756f6a" },
+                            axisLabel: { fontSize: 30, padding: 30 },
+                            tickLabels: { fontSize: 20, padding: 5 },
+                            grid: { stroke: "grey" },
+                            ticks: { stroke: "grey" },
+                          }}
+                        />
+                        <VictoryBar
+                          style={{
+                            data: { fill: ({datum}) => {
+                              console.log(datum.xName);
+                              console.log(colours[datum.xName]);
+                              return colours[datum.xName];
+                            }, width: 60 }, labels: {
+                              fill: "#ffffff",
+                              fontSize: 30,
+                            }
+                          }}
+                          alignment="middle"
+                          labels={({ datum }) => `${datum.x}`}
+                          labelComponent={<VictoryLabel textAnchor={"end"} dx={-20} />}
+                          data={[
+                            { y: result.one.votes, x: result.one.name },
+                            { y: result.two.votes, x: result.two.name }
+                          ]}
+                        />
+                        <VictoryAxis
+                          fixLabelOverlap
+                          style={{
+                            axis: { stroke: "#756f6a" },
+                            axisLabel: { fontSize: 0, padding: 0 },
+                            tickLabels: { fontSize: 0, padding: 0 },
+                            grid: { stroke: "grey", strokeWidth: 0 },
+                            ticks: { strokeWidth: 0 },
+                          }}
+                        />
+                      </VictoryChart>
+                    </Col>
+                    {/*BEGIN LINES */}
+                    <Col sm md lg>
+                      <VictoryChart
+                        theme={VictoryTheme.material}
+                        height={350 * 1.5 - 50}
+                        width={750}
+                        domainPadding={{ y: 100 }}
+                        padding={{
+                          top: 0,
+                          bottom: 80,
+                          left: 100
                         }}
-                        alignment="middle"
-                        labels={({ datum }) => `${datum.x}`}
-                        labelComponent={<VictoryLabel textAnchor={"end"} dx={-20} />}
-                        data={[
-                          { y: result.one.votes, x: result.one.name },
-                          { y: result.two.votes, x: result.two.name }
-                        ]}
-                      />
-                      <VictoryAxis
-                        fixLabelOverlap
-                        style={{
-                          axis: { stroke: "#756f6a" },
-                          axisLabel: { fontSize: 0, padding: 0 },
-                          tickLabels: { fontSize: 0, padding: 0 },
-                          grid: { stroke: "grey", strokeWidth: 0 },
-                          ticks: { strokeWidth: 0 },
-                        }}
-                      />
-                    </VictoryChart>
-                  </Col>
+                      >
+                        <VictoryAxis
+                          dependentAxis
+                          label="Votes"
+                          fixLabelOverlap
+                          style={{
+                            axis: { stroke: "#756f6a" },
+                            axisLabel: { fontSize: 20, padding: 40 },
+                            tickLabels: { fontSize: 20, padding: 5 },
+                            grid: { stroke: "grey" },
+                            ticks: { stroke: "grey" },
+                          }}
+                        />
+                        <VictoryAxis
+                          label="Time (hrs)"
+                          fixLabelOverlap
+                          style={{
+                            axis: { stroke: "#756f6a" },
+                            axisLabel: { fontSize: 20, padding: 40 },
+                            tickLabels: { fontSize: 20, padding: 5 },
+                            grid: { stroke: "grey" },
+                            ticks: { stroke: "grey" },
+                          }}
+                        />
+                        <VictoryLine
+                          style={{
+                            data: { stroke: colours[result.one.name] },
+                            parent: { border: "1px solid #ccc" }
+                          }}
+                          data={oneVotes}
+                        />
+                        <VictoryLine
+                          style={{
+                            data: { stroke: colours[result.two.name] },
+                            parent: { border: "1px solid #ccc" }
+                          }}
+                          data={twoVotes}
+                        />
+                      </VictoryChart>
+                    </Col>
+                  </Row>
                 )
               })
             }
-          </Row>
         </Container>
 
         <h3>Upcoming quarterfinals:</h3>
@@ -392,7 +471,6 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
           <Row>
             {
               this.state.results.filter(result => !result.today && typeof result.link !== "undefined").map((result) => {
-
                 return (
                   <Col sm md lg>
                     <VictoryChart
