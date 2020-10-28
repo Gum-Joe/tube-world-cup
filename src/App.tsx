@@ -160,12 +160,12 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
   }
 
   async updateHistory() {
-    console.log("FITOWRST");
+    //console.log("FITOWRST");
     const history = await fetch(REALTIME_RESULTS)
     this.setState({
       resultsHistories: (await history.json()).matches
     })
-    console.log("FIRST");
+    //console.log("FIRST");
   }
 
   componentDidMount() {
@@ -293,14 +293,14 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
               this.state.results.filter(result => result.today).map((result) => {
 
                 const historydata = this.state.resultsHistories.filter(element => {
-                  return (element.one === (result.one.name !== "Thameslink" ? result.one.name + " Line" : result.one.name)) && (element.two === (result.two.name !== "Thameslink" ? result.two.name + " Line" : result.two.name))
+                  return (element.one === (result.one.name !== "Thameslink" ? result.one.name + " Line" : result.one.name)) && (element.two === (result.two.name !== "Trams" ? result.two.name + " Line" : result.two.name))
                 })[0];
                 let oneVotes = [];
                 let twoVotes = [];
                 if (typeof historydata !== "undefined") {
                   // Fix
                   oneVotes = historydata.results.map((resultHere: any) => {
-                    console.log(resultHere.time - historydata.startTime);
+                    //console.log(resultHere.time - historydata.startTime);
                     return {
                       x: (resultHere.time - historydata.startTime) / 1000 / 60 / 60,
                       y: resultHere.votes.one
@@ -314,7 +314,7 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                   });
                 }
 
-                console.log(oneVotes);
+                console.log(twoVotes);
             
                 return (
                   <Row>
@@ -347,8 +347,8 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                         <VictoryBar
                           style={{
                             data: { fill: ({datum}) => {
-                              console.log(datum.xName);
-                              console.log(colours[datum.xName]);
+                              //console.log(datum.xName);
+                              //console.log(colours[datum.xName]);
                               return colours[datum.xName];
                             }, width: 60 }, labels: {
                               fill: "#ffffff",
@@ -507,8 +507,8 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
                         style={{
                           data: {
                             fill: ({ datum }) => {
-                              console.log(datum.xName);
-                              console.log(colours[datum.xName]);
+                              //console.log(datum.xName);
+                              //console.log(colours[datum.xName]);
                               return colours[datum.xName];
                             }, width: 60
                           }, labels: {
