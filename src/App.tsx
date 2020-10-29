@@ -318,6 +318,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
 
   updateResults() {
     //const newPairs: Promise<StateInfo>[] = pairs.map(this.getUpdates);
+    console.log("UPDATED");
 
     this.getUpdates("knockout").then((results) => this.setState({
       resultsKnockout: results,
@@ -399,6 +400,9 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                     y: resultHere.votes.two
                   }
                 });
+
+                console.log(result.one.name);
+                console.log(result.two.name);
             
                 return (
                   <Row>
@@ -497,7 +501,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                         />
                         {/* If Picadilly and DLR, PLOT */}
                         {
-                          result.one.name === "Piccadilly" && result.two.name === "DLR" ?
+                          result.one.name === "DLR" && result.two.name === "Piccadilly" ?
                             // DLR
                             <VictoryLine
                               style={{
@@ -518,7 +522,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                             : null
                         }
                         {
-                          result.one.name === "Piccadilly" && result.two.name === "DLR" ?
+                          result.one.name === "DLR" && result.two.name === "Piccadilly" ?
                             // DLR
                             <VictoryLine
                               style={{
