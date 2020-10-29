@@ -3,7 +3,7 @@ import './App.css';
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip } from "victory";
+import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
 import { faGithub, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 
@@ -205,6 +205,8 @@ const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
   "quartera2": "Blackfriars",
 }
+
+const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
 class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: Record<string, ResultHistories> }> {
 
@@ -485,8 +487,10 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                           left: 100
                         }}
                         containerComponent={
-                          <VictoryVoronoiContainer voronoiDimension="x"
+                          // @ts-ignore
+                          <VictoryZoomVoronoiContainer voronoiDimension="x"
                             radius={100000}
+                            // @ts-ignore
                             labels={({ datum }) => `${datum.y}`}
                             labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white", fontSize: 20 }} />}
                           />
