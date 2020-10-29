@@ -137,10 +137,11 @@ const quarterfinals = [
     "Blackfriars"
   ],
   [
-    "???",
-    "???",
+    "Victoria",
+    "Metropolitan",
     DEVNULL,
     "false",
+    "King's Cross"
   ],
   [
     "???",
