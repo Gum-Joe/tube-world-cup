@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/tube-world-cup/static/css/main.35c7a5d5.chunk.css",
-    "main.js": "/tube-world-cup/static/js/main.19a77f7d.chunk.js",
-    "main.js.map": "/tube-world-cup/static/js/main.19a77f7d.chunk.js.map",
+    "main.js": "/tube-world-cup/static/js/main.3170d0d9.chunk.js",
+    "main.js.map": "/tube-world-cup/static/js/main.3170d0d9.chunk.js.map",
     "runtime-main.js": "/tube-world-cup/static/js/runtime-main.7c352a76.js",
     "runtime-main.js.map": "/tube-world-cup/static/js/runtime-main.7c352a76.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/tube-world-cup/static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.fb0d16fa.chunk.js": "/tube-world-cup/static/js/2.fb0d16fa.chunk.js",
-    "static/js/2.fb0d16fa.chunk.js.map": "/tube-world-cup/static/js/2.fb0d16fa.chunk.js.map",
+    "static/js/2.cb08e691.chunk.js": "/tube-world-cup/static/js/2.cb08e691.chunk.js",
+    "static/js/2.cb08e691.chunk.js.map": "/tube-world-cup/static/js/2.cb08e691.chunk.js.map",
     "static/js/3.912f5c4e.chunk.js": "/tube-world-cup/static/js/3.912f5c4e.chunk.js",
     "static/js/3.912f5c4e.chunk.js.map": "/tube-world-cup/static/js/3.912f5c4e.chunk.js.map",
     "index.html": "/tube-world-cup/index.html",
     "static/css/2.20aa2d7b.chunk.css.map": "/tube-world-cup/static/css/2.20aa2d7b.chunk.css.map",
     "static/css/main.35c7a5d5.chunk.css.map": "/tube-world-cup/static/css/main.35c7a5d5.chunk.css.map",
-    "static/js/2.fb0d16fa.chunk.js.LICENSE.txt": "/tube-world-cup/static/js/2.fb0d16fa.chunk.js.LICENSE.txt"
+    "static/js/2.cb08e691.chunk.js.LICENSE.txt": "/tube-world-cup/static/js/2.cb08e691.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7c352a76.js",
     "static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.fb0d16fa.chunk.js",
+    "static/js/2.cb08e691.chunk.js",
     "static/css/main.35c7a5d5.chunk.css",
-    "static/js/main.19a77f7d.chunk.js"
+    "static/js/main.3170d0d9.chunk.js"
   ]
 }
