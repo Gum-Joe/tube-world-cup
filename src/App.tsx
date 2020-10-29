@@ -261,7 +261,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
         winner: (
           tweet.poll.options[0].votes > tweet.poll.options[1].votes ? 1 : 2
         ),
-        link: "https://twitter.com/geofftech/status/" + tweet.poll,
+        link: "https://twitter.com/geofftech/status/" + tweet.tweetId,
         today: tweet.poll.voting_status === "open" ? true : false,
         venue: venueMap[tweet.game] || "???",
       }
