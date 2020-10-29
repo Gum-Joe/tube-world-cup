@@ -609,6 +609,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
         <Table striped bordered responsive>
           <thead>
             <tr>
+              <th>Link</th>
               <th>Venue</th>
               <th>Line 1</th>
               <th>Votes</th>
@@ -616,7 +617,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
               <th>Line 2</th>
               <th>Votes</th>
               <th>%</th>
-              <th>Link</th>
+              <th>∆</th>
             </tr>
           </thead>
           <tbody>
@@ -624,6 +625,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
               this.state.resultsQFinals.map((result) => {
                 return (
                   <tr>
+                    <td><a href={result.link}>View</a></td>
                     <td>{result.venue || "???"}</td>
                     <td className={result.one.className}>{result.one.name} {result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
                     <td>{result.one.votes}</td>
@@ -635,7 +637,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                     <td style={{
                       "backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
                     }} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td><a href={result.link}>View</a></td>
+                    <td>{result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}</td>
                   </tr>
                 )
               })
