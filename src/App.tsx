@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import logo from './logo.svg';
 import './App.css';
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faCheckCircle, faTicketAlt } from "@fortawesome/free-solid-svg-icons";
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine } from "victory";
 
 
