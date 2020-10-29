@@ -8,7 +8,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "rec
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine } from "victory";
 
 
-const REALTIME_RESULTS = "https://gentle-wildflower-0e5e.kishansambhi.workers.dev/?http://tubelinecomp.gumjoe.com/api/get/tube-results";
+const REALTIME_RESULTS = "https://api.davwheat.dev/fullhistory";
 
 const classes: { [key: string]: string } = {
   "Bakerloo": "bakerloo",
@@ -153,6 +153,7 @@ const quarterfinals = [
 ]
 
 interface StateInfo {
+  gameName: string;
   one: {
     name: string;
     votes: number;
@@ -185,12 +186,27 @@ interface DavidAPI {
   }
 }
 
+interface ResultHistories {
+  gane: string;
+  options: {
+    one: string;
+    two: string;
+  };
+  results: {
+    timestamp: number;
+    votes: {
+      one: number;
+      two: number;
+    };
+  }[]
+}
+
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
   "quartera2": "Blackfriars",
 }
 
-class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: any[] }> {
+class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: Record<string, ResultHistories> }> {
 
   constructor(props: any) {
     super(props);
@@ -198,7 +214,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
     this.state = {
       resultsKnockout: [],
       resultsQFinals: [],
-      resultsHistories: [],
+      resultsHistories: {},
     }
   }
 
@@ -206,7 +222,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
     //console.log("FITOWRST");
     const history = await fetch(REALTIME_RESULTS)
     this.setState({
-      resultsHistories: (await history.json()).matches
+      resultsHistories: (await history.json())
     })
     //console.log("FIRST");
   }
@@ -233,6 +249,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
     return resJSON.filter((tweet: DavidAPI) => tweet.game.includes(gameString)).map((tweet: DavidAPI): StateInfo => {
       console.log(tweetNameMap[tweet.poll.options[0].label])
       return {
+        gameName: tweet.game,
         one: {
           name: tweetNameMap[tweet.poll.options[0].label] || "???",
           votes: tweet.poll.options[0].votes,
@@ -282,6 +299,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
       console.log(err.stack);
     } finally {
       return {
+        gameName: "unknown",
         one: {
           name: tuple[0],
           votes: one,
@@ -364,29 +382,25 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
             {
               this.state.resultsKnockout.filter(result => result.today).map((result) => {
 
-                const historydata = this.state.resultsHistories.filter(element => {
-                  return (element.one === (result.one.name !== "Thameslink" ? result.one.name + " Line" : result.one.name)) && (element.two === (result.two.name !== "Trams" ? result.two.name + " Line" : result.two.name))
-                })[0];
-                let oneVotes = [];
-                let twoVotes = [];
-                if (typeof historydata !== "undefined") {
-                  // Fix
-                  oneVotes = historydata.results.map((resultHere: any) => {
-                    //console.log(resultHere.time - historydata.startTime);
-                    return {
-                      x: (resultHere.time - historydata.startTime) / 1000 / 60 / 60,
-                      y: resultHere.votes.one
-                    }
-                  });
-                  twoVotes = historydata.results.map((resultHere: any) => {
-                    return {
-                      x: (resultHere.time - historydata.startTime) / 1000 / 60 / 60,
-                      y: resultHere.votes.two
-                    }
-                  });
+                const historydata: ResultHistories = this.state.resultsHistories[result.gameName];
+                if (typeof historydata === "undefined") {
+                  return;
                 }
 
-                console.log(twoVotes);
+                let oneVotes = historydata.results.map((resultHere) => {
+                  //console.log(resultHere.time - historydata.startTime);
+                  return {
+                    x: (resultHere.timestamp - historydata.results[0].timestamp) / 1000 / 60 / 60,
+                    y: resultHere.votes.one
+                  }
+                });
+                let twoVotes = historydata.results.map((resultHere) => {
+                  //console.log(resultHere.time - historydata.startTime);
+                  return {
+                    x: (resultHere.timestamp - historydata.results[1].timestamp) / 1000 / 60 / 60,
+                    y: resultHere.votes.two
+                  }
+                });
             
                 return (
                   <Row>
