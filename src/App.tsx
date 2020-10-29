@@ -326,9 +326,16 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
 
     const newquarterFinals: Promise<StateInfo>[] = quarterfinals.map(this.getUpdatesOld);
 
-    Promise.all(newquarterFinals).then((resultsQFinals) => this.setState({
-      resultsQFinals,
-    }))
+    Promise.all(newquarterFinals).then((resultsQFinals) => {
+      this.getUpdates("quarter").then((results) => {
+        this.setState({
+          resultsQFinals: [
+            ...results,
+            ...resultsQFinals,
+          ],
+        })
+      });
+    });
   }
 
   render() {
