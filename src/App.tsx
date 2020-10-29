@@ -30,6 +30,25 @@ const classes: { [key: string]: string } = {
   "???": "unknown",
 }
 
+const tweetNameMap: { [key: string]: string } = {
+  "Bakerloo Line": "Bakerloo",
+  "Northern Line": "Northern",
+  "Jubilee Line": "Jubilee",
+  "TfL Rail": "TfL Rail",
+  "Central Line": "Central",
+  "District Line": "District",
+  "Circle Line": "Circle",
+  "Thameslink": "Thameslink",
+  "Hammersmith & City Line": "H&C",
+  "Victoria Line": "Victoria",
+  "Metropolitan Line": "Metropolitan",
+  "Trams": "Trams",
+  "London Overground": "Overground",
+  "Cable Car": "CableCar",
+  "DLR": "DLR",
+  "Piccadilly Line": "Piccadilly",
+}
+
 const colours: { [key: string]: string } = {
   "Bakerloo": "#B36305",
   "Northern": "#000000",
@@ -150,13 +169,34 @@ interface StateInfo {
   venue?: string;
 }
 
-class App extends Component<any, { results: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: any[] }> {
+interface DavidAPI {
+  tweetId: string;
+  game: string;
+  poll: {
+    voting_status: string;
+    end_datetime: string;
+    id: string;
+    duration_minutes: string;
+    options: {
+      position: number;
+      label: string;
+      votes: number;
+    }[]
+  }
+}
+
+const venueMap: { [key: string]: string } = {
+  "quartera1": "Waterloo",
+  "quartera2": "Blackfriars",
+}
+
+class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals: StateInfo[], resultsHistories: any[] }> {
 
   constructor(props: any) {
     super(props);
 
     this.state = {
-      results: [],
+      resultsKnockout: [],
       resultsQFinals: [],
       resultsHistories: [],
     }
@@ -186,7 +226,35 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
     }, 120000)
   }
 
-  async getUpdates(tuple: string[]): Promise<StateInfo> {
+  async getUpdates(gameString: string): Promise<StateInfo[]> {
+    // NEW API
+    const res = await fetch("https://api.davwheat.dev/getpolls");
+    const resJSON = await res.json();
+    return resJSON.filter((tweet: DavidAPI) => tweet.game.includes(gameString)).map((tweet: DavidAPI): StateInfo => {
+      console.log(tweetNameMap[tweet.poll.options[0].label])
+      return {
+        one: {
+          name: tweetNameMap[tweet.poll.options[0].label] || "???",
+          votes: tweet.poll.options[0].votes,
+          className: classes[tweetNameMap[tweet.poll.options[0].label] || "???"]
+        },
+        two: {
+          name: tweetNameMap[tweet.poll.options[1].label] || "???",
+          votes: tweet.poll.options[1].votes,
+          className: classes[tweetNameMap[tweet.poll.options[1].label] || "???"]
+        },
+        winner: (
+          tweet.poll.options[0].votes > tweet.poll.options[1].votes ? 1 : 2
+        ),
+        link: "https://twitter.com/geofftech/status/" + tweet.poll,
+        today: tweet.poll.voting_status === "open" ? true : false,
+        venue: venueMap[tweet.game] || "???",
+      }
+    });
+  }
+
+  // Kept around because we need it for pending 
+  async getUpdatesOld(tuple: string[]): Promise<StateInfo> {
     let one: number = 0;
     let two: number = 0;
     let winner: number = 0;
@@ -233,13 +301,13 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
   }
 
   updateResults() {
-    const newPairs: Promise<StateInfo>[] = pairs.map(this.getUpdates);
+    //const newPairs: Promise<StateInfo>[] = pairs.map(this.getUpdates);
 
-    Promise.all(newPairs).then((results) => this.setState({
-      results,
+    this.getUpdates("knockout").then((results) => this.setState({
+      resultsKnockout: results,
     }));
 
-    const newquarterFinals: Promise<StateInfo>[] = quarterfinals.map(this.getUpdates);
+    const newquarterFinals: Promise<StateInfo>[] = quarterfinals.map(this.getUpdatesOld);
 
     Promise.all(newquarterFinals).then((resultsQFinals) => this.setState({
       resultsQFinals,
@@ -269,7 +337,7 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
           </thead>
           <tbody>
             {
-              this.state.results.map((result) => {
+              this.state.resultsKnockout.map((result) => {
                 return (
                   <tr>
                     <td className={result.one.className}>{result.one.name} { result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle}/> : "" }</td>
@@ -294,7 +362,7 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
         <h3>Today's games:</h3>
         <Container>
             {
-              this.state.results.filter(result => result.today).map((result) => {
+              this.state.resultsKnockout.filter(result => result.today).map((result) => {
 
                 const historydata = this.state.resultsHistories.filter(element => {
                   return (element.one === (result.one.name !== "Thameslink" ? result.one.name + " Line" : result.one.name)) && (element.two === (result.two.name !== "Trams" ? result.two.name + " Line" : result.two.name))
@@ -522,7 +590,7 @@ class App extends Component<any, { results: StateInfo[], resultsQFinals: StateIn
         <Container>
           <Row>
             {
-              this.state.results.filter(result => !result.today && typeof result.link !== "undefined").map((result) => {
+              this.state.resultsKnockout.filter(result => !result.today && typeof result.link !== "undefined").map((result) => {
                 return (
                   <Col sm md lg>
                     <VictoryChart
