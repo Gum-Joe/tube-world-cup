@@ -231,13 +231,9 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
     const bound = this.updateResults.bind(this);
     setInterval(() => bound(), 20000);
 
-    setInterval(async () => {
-      const history = await (await fetch(REALTIME_RESULTS)).json();
-      const matches = history.matches;
-      this.setState({
-        resultsHistories: history.matches
-      })
-    }, 120000)
+    const boundHist = this.updateHistory.bind(this);
+
+    setInterval(() => boundHist(), 60000)
   }
 
   async getUpdates(gameString: string): Promise<StateInfo[]> {
