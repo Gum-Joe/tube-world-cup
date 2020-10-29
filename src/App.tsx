@@ -390,7 +390,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
         <h6>Thin grey lines represent the difference between options.</h6>
         <Container>
             {
-              this.state.resultsKnockout.filter(result => result.today).map((result) => {
+            [...this.state.resultsKnockout, ...this.state.resultsQFinals].filter(result => result.today).map((result) => {
 
                 const historydata: ResultHistories = this.state.resultsHistories[result.gameName];
                 if (typeof historydata === "undefined") {
