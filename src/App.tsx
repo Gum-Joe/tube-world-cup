@@ -3,7 +3,7 @@ import './App.css';
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine } from "victory";
+import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip } from "victory";
 import { faGithub, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 
@@ -341,13 +341,14 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
         <Table striped bordered responsive>
           <thead>
             <tr>
+              <th>Link</th>
               <th>Line 1</th>
               <th>Votes</th>
               <th>%</th>
               <th>Line 2</th>
               <th>Votes</th>
               <th>%</th>
-              <th>Link</th>
+              <th>∆</th>
             </tr>
           </thead>
           <tbody>
@@ -355,6 +356,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
               this.state.resultsKnockout.map((result) => {
                 return (
                   <tr>
+                    <td><a href={result.link}>View</a></td>
                     <td className={result.one.className}>{result.one.name} { result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle}/> : "" }</td>
                     <td>{result.one.votes}</td>
                     <td style={{
@@ -365,7 +367,7 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                     <td style={{
                       "backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
                     }} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td><a href={result.link}>View</a></td>
+                    <td>{result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}</td>
                   </tr>
                 )
               })
@@ -375,6 +377,8 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
         
         
         <h3>Today's games:</h3>
+        <h6>Straight lines represent votes in the same match from previous years.</h6>
+        <h6>Thin grey lines represent the difference between options.</h6>
         <Container>
             {
               this.state.resultsKnockout.filter(result => result.today).map((result) => {
@@ -398,6 +402,13 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                     y: resultHere.votes.two
                   }
                 });
+
+                let difference = historydata.results.map((resultHere) => {
+                  return {
+                    x: (resultHere.timestamp - historydata.results[1].timestamp) / 1000 / 60 / 60,
+                    y: resultHere.votes.one > resultHere.votes.two ? resultHere.votes.one - resultHere.votes.two : resultHere.votes.two - resultHere.votes.one
+                  }
+                })
 
                 console.log(result.one.name);
                 console.log(result.two.name);
@@ -473,6 +484,13 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                           bottom: 80,
                           left: 100
                         }}
+                        containerComponent={
+                          <VictoryVoronoiContainer voronoiDimension="x"
+                            radius={100000}
+                            labels={({ datum }) => `${datum.y}`}
+                            labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white", fontSize: 20 }} />}
+                          />
+                        }
                       >
                         <VictoryAxis
                           dependentAxis
@@ -502,9 +520,10 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                           result.one.name === "DLR" && result.two.name === "Piccadilly" ?
                             // DLR
                             <VictoryLine
+                              name={result.one.name}
                               style={{
                                 data: { stroke: colours["DLR"], strokeWidth: 3 },
-                                parent: { border: "1px solid #ccc" }
+                                parent: { border: "1px solid #ccc" },
                               }}
                               data={[
                                 {
@@ -542,15 +561,28 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
                         }
                         <VictoryLine
                           style={{
+                            data: { stroke: "rgb(65, 75, 86)", strokeWidth: 2 },
+                            parent: { border: "1px solid #ccc" },
+                          }}
+                          data={difference}
+                        />
+                        <VictoryLine
+                          style={{
                             data: { stroke: colours[result.one.name], strokeWidth: 5 },
-                            parent: { border: "1px solid #ccc" }
+                            parent: { border: "1px solid #ccc" },
+                            labels: {
+                              fill: colours[result.one.name]
+                            }
                           }}
                           data={oneVotes}
                         />
                         <VictoryLine
                           style={{
                             data: { stroke: colours[result.two.name], strokeWidth: 5 },
-                            parent: { border: "1px solid #ccc" }
+                            parent: { border: "1px solid #ccc" },
+                            labels: {
+                              fill: colours[result.two.name]
+                            }
                           }}
                           data={twoVotes}
                         />
