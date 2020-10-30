@@ -16,6 +16,10 @@ const venueMap: { [key: string]: string } = {
   "quarterb4": "Shadwell",
 }
 
+const venueQuoteMap: Record<string, string> = {
+  "Waterloo": "BREAKING: A reporter for the Geoff Broadcasting Corporation (GBC), at Waterloo, has informed us that \"a socially distanced crowd wearing face coverings has turned up at the Waterloo ticket hall concourse to see this highly anticipated match\""
+}
+
 
 
 class App extends Component<any, {
@@ -186,6 +190,19 @@ class App extends Component<any, {
         <h3>Today's games:</h3>
         <h6>Straight lines represent votes in the same match from previous years.</h6>
         <h6>Thin grey lines represent the difference between options.</h6>
+
+        { this.state.resultsQFinals.filter(result => result.today).map(result => {
+          if (typeof result.venue !== "undefined" && typeof venueQuoteMap[result.venue] !== "undefined") {
+            return (
+              <Container className="quotedReport">
+                <h5>{venueQuoteMap[result.venue]}</h5>
+              </Container>
+            )
+          } else {
+            return null;
+          }
+        }) }
+        
         <Container>
           <Row>
             <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout ]} history={this.state.resultsHistories} />
