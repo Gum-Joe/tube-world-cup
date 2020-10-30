@@ -70,7 +70,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 											fixLabelOverlap
 											style={{
 												axis: { stroke: "#756f6a" },
-												axisLabel: { fontSize: 30, padding: 100 },
+												axisLabel: { fontSize: 30, padding: 40 },
 												tickLabels: { fontSize: 20, padding: 5 },
 												grid: { stroke: "grey" },
 												ticks: { stroke: "grey" },
@@ -135,7 +135,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 											fixLabelOverlap
 											style={{
 												axis: { stroke: "#756f6a" },
-												axisLabel: { fontSize: 20, padding: 40 },
+												axisLabel: { fontSize: 20, padding: 70 },
 												tickLabels: { fontSize: 20, padding: 5 },
 												grid: { stroke: "grey" },
 												ticks: { stroke: "grey" },
