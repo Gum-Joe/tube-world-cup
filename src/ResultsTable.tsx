@@ -7,13 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const ResultsTable: React.FunctionComponent<{
 	results: StateInfo[],
-	children?: ReactNode;
+	allowVenues?: boolean,
 }> = (props) => {
 	return (
 		<Table striped bordered responsive>
 			<thead>
 				<tr>
 					<th>Link</th>
+					{props.allowVenues ? <th>Venue</th> : null}
 					<th>Line 1</th>
 					<th>Votes</th>
 					<th>%</th>
@@ -29,6 +30,7 @@ const ResultsTable: React.FunctionComponent<{
 						return (
 							<tr>
 								<td><a href={result.link}>View</a></td>
+								{ props.allowVenues ? <td>{result.venue || "???"}</td> : null }
 								<td className={result.one.className}>{result.one.name} {result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
 								<td>{result.one.votes}</td>
 								<td style={{

@@ -184,7 +184,7 @@ class App extends Component<any, {
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
         <h3>Quarterfinals:</h3>
-        <ResultsTable results={this.state.resultsQFinals} />
+        <ResultsTable results={this.state.resultsQFinals} allowVenues />
         
         
         <h3>Today's games:</h3>
