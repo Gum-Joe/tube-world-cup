@@ -108,13 +108,13 @@ const pairs = [
   ]
 ];
 export const quarterfinals = [
-  [
+  /*[
     "District",
     "Thameslink",
     DEVNULL,
     "false",
     "Blackfriars"
-  ],
+  ],*/
   [
     "Victoria",
     "Metropolitan",
