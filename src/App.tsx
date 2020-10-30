@@ -4,207 +4,15 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
-import { faGithub, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
-
-
-const REALTIME_RESULTS = "https://api.davwheat.dev/fullhistory";
-
-const classes: { [key: string]: string } = {
-  "Bakerloo": "bakerloo",
-  "Northern": "northern",
-  "Jubilee": "jubilee",
-  "TfL Rail": "tflrail",
-  "Central": "central",
-  "District": "district",
-  "Circle": "circle",
-  "Thameslink": "thameslink",
-  "H&C": "handc",
-  "Victoria": "victoria",
-  "Metropolitan": "metropolitan",
-  "Trams": "trams",
-  "Overground": "overground",
-  "CableCar": "cablecar",
-  "DLR": "dlr",
-  "Piccadilly": "picadilly",
-  "???": "unknown",
-}
-
-const tweetNameMap: { [key: string]: string } = {
-  "Bakerloo Line": "Bakerloo",
-  "Northern Line": "Northern",
-  "Jubilee Line": "Jubilee",
-  "TfL Rail": "TfL Rail",
-  "Central Line": "Central",
-  "District Line": "District",
-  "Circle Line": "Circle",
-  "Thameslink": "Thameslink",
-  "Hammersmith & City Line": "H&C",
-  "Victoria Line": "Victoria",
-  "Metropolitan Line": "Metropolitan",
-  "Trams": "Trams",
-  "London Overground": "Overground",
-  "Cable Car": "CableCar",
-  "DLR": "DLR",
-  "Piccadilly Line": "Piccadilly",
-}
-
-const colours: { [key: string]: string } = {
-  "Bakerloo": "#B36305",
-  "Northern": "#000000",
-  "Jubilee": "#A0A5A9",
-  "TfL Rail": "rgb(0, 25, 168)",
-  "Central": "rgb(220, 36, 31)",
-  "District": "rgb(0, 125, 50)",
-  "Circle": "rgb(255, 211, 41)",
-  "Thameslink": "#E9438D",
-  "H&C": "rgb(244, 169, 190)",
-  "Victoria": "rgb(0, 152, 216)",
-  "Metropolitan": "rgb(155, 0, 88)",
-  "Trams": "rgb(0, 189, 25)",
-  "Overground": "rgb(239, 123, 16)",
-  "CableCar": "rgb(220, 36, 31)",
-  "DLR": "rgb(0, 175, 173)",
-  "Piccadilly": "rgb(0, 25, 168)"
-}
-
-const DEVNULL = "https://devnull-as-a-service.com/dev/null";
-const PREFIX = "https://twitter.www.statshelix.com"
-const FULL_PREFIX = PREFIX + "/api/Tweet/GetTweet?url=";
-
-const pairs = [
-  [
-    "Bakerloo",
-    "Northern",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637628518223872",
-    "false"
-  ],
-  [
-    "Jubilee",
-    "TfL Rail",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1320637979858247680",
-    "false"
-  ],
-  [
-    "Central",
-    "District",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321001660479639552",
-    "false",
-  ],
-  [
-    "Circle",
-    "Thameslink",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321002110801108993",
-    "false",
-  ],
-  [
-    "H&C",
-    "Victoria",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321364991803621376",
-    "true",
-  ],
-  [
-    "Metropolitan",
-    "Trams",
-    PREFIX + "/api/Tweet/GetTweet?url=https://twitter.com/geofftech/status/1321365302811217923",
-    "true",
-  ],
-  [
-    "Overground",
-    "CableCar",
-    DEVNULL, // FULL_PREFIX + URL
-    "false" // CHANGEME
-  ],
-  [
-    "DLR",
-    "Piccadilly",
-    DEVNULL, // FULL_PREFIX + URL
-    "false" // CHANGEME
-  ]
-]
-
-const quarterfinals = [
-  [
-    "Northern",
-    "Jubilee",
-    DEVNULL,
-    "false",
-    "Waterloo"
-  ],
-  [
-    "District",
-    "Thameslink",
-    DEVNULL,
-    "false",
-    "Blackfriars"
-  ],
-  [
-    "Victoria",
-    "Metropolitan",
-    DEVNULL,
-    "false",
-    "King's Cross"
-  ],
-  [
-    "Overground",
-    "DLR",
-    DEVNULL,
-    "false",
-    "Shadwell"
-  ],
-]
-
-interface StateInfo {
-  gameName: string;
-  one: {
-    name: string;
-    votes: number;
-    className: string;
-  };
-  two: {
-    name: string;
-    votes: number;
-    className: string;
-  };
-  winner: number;
-  link: string;
-  today: boolean;
-  venue?: string;
-}
-
-interface DavidAPI {
-  tweetId: string;
-  game: string;
-  poll: {
-    voting_status: string;
-    end_datetime: string;
-    id: string;
-    duration_minutes: string;
-    options: {
-      position: number;
-      label: string;
-      votes: number;
-    }[]
-  }
-}
-
-interface ResultHistories {
-  gane: string;
-  options: {
-    one: string;
-    two: string;
-  };
-  results: {
-    timestamp: number;
-    votes: {
-      one: number;
-      two: number;
-    };
-  }[]
-}
+import { faGithub, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, quarterfinals, colours } from "./constants";
+import ResultsTable from "./ResultsTable";
 
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
   "quartera2": "Blackfriars",
+  "quarterb3": "King's Cross",
+  "quarterb4": "Shadwell",
 }
 
 const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
@@ -347,43 +155,8 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
           <h5>Updated every 20 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
-        <h3>Knockout stage games:</h3>
-        <Table striped bordered responsive>
-          <thead>
-            <tr>
-              <th>Link</th>
-              <th>Line 1</th>
-              <th>Votes</th>
-              <th>%</th>
-              <th>Line 2</th>
-              <th>Votes</th>
-              <th>%</th>
-              <th>∆</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.resultsKnockout.map((result) => {
-                return (
-                  <tr>
-                    <td><a href={result.link}>View</a></td>
-                    <td className={result.one.className}>{result.one.name} { result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle}/> : "" }</td>
-                    <td>{result.one.votes}</td>
-                    <td style={{
-                      "backgroundSize": `100% ${((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-                    }} className={result.one.className}>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td className={result.two.className}>{result.two.name} {result.winner === 2 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
-                    <td>{result.two.votes}</td>
-                    <td style={{
-                      "backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-                    }} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td>{result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}</td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </Table>
+        <h3>Quarterfinals:</h3>
+        <ResultsTable results={this.state.resultsQFinals} />
         
         
         <h3>Today's games:</h3>
@@ -606,45 +379,8 @@ class App extends Component<any, { resultsKnockout: StateInfo[], resultsQFinals:
             }
         </Container>
 
-        <h3>Upcoming quarterfinals:</h3>
-        <Table striped bordered responsive>
-          <thead>
-            <tr>
-              <th>Link</th>
-              <th>Venue</th>
-              <th>Line 1</th>
-              <th>Votes</th>
-              <th>%</th>
-              <th>Line 2</th>
-              <th>Votes</th>
-              <th>%</th>
-              <th>∆</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.resultsQFinals.map((result) => {
-                return (
-                  <tr>
-                    <td><a href={result.link}>View</a></td>
-                    <td>{result.venue || "???"}</td>
-                    <td className={result.one.className}>{result.one.name} {result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
-                    <td>{result.one.votes}</td>
-                    <td style={{
-                      "backgroundSize": `100% ${((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-                    }} className={result.one.className}>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td className={result.two.className}>{result.two.name} {result.winner === 2 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
-                    <td>{result.two.votes}</td>
-                    <td style={{
-                      "backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-                    }} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
-                    <td>{result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}</td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </Table>
+        <h3>Knockout stage results:</h3>
+        <ResultsTable results={this.state.resultsKnockout} />
 
         <h3>Past games:</h3>
         <Container>
