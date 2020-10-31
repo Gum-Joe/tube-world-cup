@@ -50,7 +50,7 @@ class App extends Component<any, {
     // Update pairs
     // Generate past games
     let pairedPastGames: Array<[StateInfo, StateInfo]> = [];
-    const filtered = this.state.resultsKnockout.filter(result => !result.today && typeof result.link !== "undefined");
+    const filtered = [...this.state.resultsKnockout, ...this.state.resultsQFinals].filter(result => !result.today && typeof result.link !== "undefined");
     filtered.forEach((result, index) => {
       if ((index % 2) === 0) {
         pairedPastGames.push([
