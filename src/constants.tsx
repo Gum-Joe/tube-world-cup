@@ -114,14 +114,14 @@ export const quarterfinals = [
     DEVNULL,
     "false",
     "Blackfriars"
-  ],*/
+  ],
   [
     "Victoria",
     "Metropolitan",
     DEVNULL,
     "false",
     "King's Cross"
-  ],
+  ],*/
   [
     "Overground",
     "DLR",
