@@ -12,8 +12,8 @@ import Graphs from "./Graphs";
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
   "quartera2": "Blackfriars",
-  "quarterb3": "King's Cross",
-  "quarterb4": "Shadwell",
+  "quarterb1": "King's Cross",
+  "quarterb2": "Shadwell",
 }
 
 const venueQuoteMap: Record<string, string> = {
@@ -165,10 +165,11 @@ class App extends Component<any, {
     Promise.all(newquarterFinals).then((resultsQFinals) => {
       this.getUpdates("quarter").then((results) => {
        this.getUpdates("unknown").then((results2) => this.setState({
-      resultsQFinals: [
-...results, ...results2, ...resultsQFinals]
-    })); 
-/*this.setState({
+        resultsQFinals: [
+          ...results, ...results2, ...resultsQFinals
+        ]})
+      ); 
+        /*this.setState({
           resultsQFinals: [
             ...results,
             ...resultsQFinals,
