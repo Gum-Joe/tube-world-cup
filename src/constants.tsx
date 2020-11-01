@@ -121,14 +121,14 @@ export const quarterfinals = [
     DEVNULL,
     "false",
     "King's Cross"
-  ],*/
+  ],
   [
     "Overground",
     "DLR",
     DEVNULL,
     "false",
     "Shadwell"
-  ],
+  ],*/
 ];
 export interface StateInfo {
   gameName: string;
