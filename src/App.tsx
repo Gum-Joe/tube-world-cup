@@ -164,12 +164,16 @@ class App extends Component<any, {
 
     Promise.all(newquarterFinals).then((resultsQFinals) => {
       this.getUpdates("quarter").then((results) => {
-        this.setState({
+       this.getUpdates("unknown").then((results2) => this.setState({
+      resultsQFinals: [
+...results, ...results2, ...resultsQFinals]
+    })); 
+/*this.setState({
           resultsQFinals: [
             ...results,
             ...resultsQFinals,
           ],
-        })
+        });*/
       });
     });
   }
