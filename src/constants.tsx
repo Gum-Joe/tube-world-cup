@@ -107,7 +107,7 @@ const pairs = [
     "false" // CHANGEME
   ]
 ];
-export const quarterfinals = [
+export const semifinals = [
   /*[
     "District",
     "Thameslink",
@@ -129,7 +129,41 @@ export const quarterfinals = [
     "false",
     "Shadwell"
   ],*/
+  [
+    "Jubilee",
+    "Thameslink",
+    DEVNULL,
+    "false",
+    "West Hampstead"
+  ],
+  [
+    "Victoria",
+    "???",
+    DEVNULL,
+    "false",
+    "???"
+  ]
 ];
+
+export const finals = [
+  [
+    "???",
+    "???",
+    DEVNULL,
+    "???",
+    "???"
+  ],
+];
+export const playoff = [
+  [
+    "???",
+    "???",
+    DEVNULL,
+    "???",
+    "???"
+  ],
+];
+
 export interface StateInfo {
   gameName: string;
   one: {

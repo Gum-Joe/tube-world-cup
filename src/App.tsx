@@ -5,15 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
 import { faGithub, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, quarterfinals, colours } from "./constants";
+import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, semifinals, playoff, finals } from "./constants";
 import ResultsTable from "./ResultsTable";
 import Graphs from "./Graphs";
+import ResultsTableCompact from "./ResultsTableCompact";
 
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
   "quartera2": "Blackfriars",
   "quarterb1": "King's Cross",
   "quarterb2": "Shadwell",
+  "semia1": "West Hampstead",
+  "semib1": "???",
+  "final": "???",
+  "playoff": "???"
 }
 
 const venueQuoteMap: Record<string, string> = {
@@ -25,8 +30,11 @@ const venueQuoteMap: Record<string, string> = {
 class App extends Component<any, {
   resultsKnockout: StateInfo[],
   resultsQFinals: StateInfo[],
+  resultsSemiFinals: StateInfo[],
   resultsHistories: Record<string, ResultHistories>,
   pairedPastGames: Array<[StateInfo, StateInfo | undefined]>,
+  resultsFinals: StateInfo[],
+  resultsPlayoff: StateInfo[],
 }> {
 
   constructor(props: any) {
@@ -37,6 +45,9 @@ class App extends Component<any, {
       resultsQFinals: [],
       resultsHistories: {},
       pairedPastGames: [],
+      resultsSemiFinals: [],
+      resultsFinals: [],
+      resultsPlayoff: [],
     }
   }
 
@@ -50,7 +61,7 @@ class App extends Component<any, {
     // Update pairs
     // Generate past games
     let pairedPastGames: Array<[StateInfo, StateInfo]> = [];
-    const filtered = [...this.state.resultsKnockout, ...this.state.resultsQFinals].filter(result => !result.today && typeof result.link !== "undefined");
+    const filtered = [...this.state.resultsKnockout, ...this.state.resultsQFinals, ...this.state.resultsSemiFinals].filter(result => !result.today && typeof result.link !== "undefined");
     filtered.forEach((result, index) => {
       if ((index % 2) === 0) {
         pairedPastGames.push([
@@ -59,7 +70,7 @@ class App extends Component<any, {
         ])
       }
     });
-    console.log(pairedPastGames);
+    //console.log(pairedPastGames);
     this.setState({
       pairedPastGames,
     });
@@ -69,18 +80,16 @@ class App extends Component<any, {
     this.updateResults();
     this.updateHistory();
     const bound = this.updateResults.bind(this);
-    setInterval(() => bound(), 20000);
+    setInterval(() => bound(), 60000);
 
     const boundHist = this.updateHistory.bind(this);
 
     setInterval(() => boundHist(), 60000)
   }
 
-  async getUpdates(gameString: string): Promise<StateInfo[]> {
+  getUpdates(resJSON: DavidAPI[], gameString: string): StateInfo[] {
     // NEW API
-    const res = await fetch("https://api.davwheat.dev/getpolls");
-    const resJSON = await res.json();
-    return resJSON.filter((tweet: DavidAPI) => tweet.game.includes(gameString)).map((tweet: DavidAPI): StateInfo => {
+    const filtered =  resJSON.filter((tweet: DavidAPI) => tweet.game.includes(gameString)).map((tweet: DavidAPI): StateInfo => {
       console.log(tweetNameMap[tweet.poll.options[0].label])
       return {
         gameName: tweet.game,
@@ -102,11 +111,30 @@ class App extends Component<any, {
         venue: venueMap[tweet.game] || "???",
       }
     });
+    console.log("getUpdates DONE");
+    return filtered;
   }
 
   // Kept around because we need it for pending 
-  async getUpdatesOld(tuple: string[]): Promise<StateInfo> {
-    let one: number = 0;
+  getUpdatesOld(tuple: string[]): StateInfo {
+    return {
+      gameName: "unknown",
+      one: {
+        name: tuple[0],
+        votes: 0,
+        className: classes[tuple[0]]
+      },
+      two: {
+        name: tuple[1],
+        votes: 0,
+        className: classes[tuple[1]]
+      },
+      winner: 0,
+      link: tuple[2].split("url=")[1],
+      today: tuple[3] === "true" ? true : false,
+      venue: tuple[4],
+    }
+    /*let one: number = 0;
     let two: number = 0;
     let winner: number = 0;
     try {
@@ -128,6 +156,8 @@ class App extends Component<any, {
         if (twoHere.length > 1 && twoHere[1] === "1") {
           winner = 2;
         }
+      } else {
+        console.log("DEVNULL");
       }
     } catch (err) {
       console.log(err.stack);
@@ -149,34 +179,42 @@ class App extends Component<any, {
         today: tuple[3] === "true" ? true : false,
         venue: tuple[4],
       }
-    }
+    }*/
   }
 
-  updateResults() {
+  async updateResults() {
     //const newPairs: Promise<StateInfo>[] = pairs.map(this.getUpdates);
-    console.log("UPDATED");
+    console.log("UPDATING");
 
-    this.getUpdates("knockout").then((results) => this.setState({
-      resultsKnockout: results,
-    }));
+    // FETCH!
+    const res = await fetch("https://api.davwheat.dev/getpolls");
+    const resJSON = await res.json();
 
-    const newquarterFinals: Promise<StateInfo>[] = quarterfinals.map(this.getUpdatesOld);
+    const newsemiFinals: StateInfo[] = [this.getUpdatesOld(semifinals[0]), this.getUpdatesOld(semifinals[1])];
 
-    Promise.all(newquarterFinals).then((resultsQFinals) => {
-      this.getUpdates("quarter").then((results) => {
-       this.getUpdates("unknown").then((results2) => this.setState({
-        resultsQFinals: [
-          ...results, ...results2, ...resultsQFinals
-        ]})
-      ); 
-        /*this.setState({
-          resultsQFinals: [
-            ...results,
-            ...resultsQFinals,
-          ],
-        });*/
-      });
-    });
+    const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
+
+    const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
+
+    const newState = {
+      resultsKnockout: this.getUpdates(resJSON, "knockout"),
+      resultsQFinals: this.getUpdates(resJSON, "quarter"),
+      resultsSemiFinals: [
+        ...this.getUpdates(resJSON, "semi"), ...this.getUpdates(resJSON, "unknown"), ...newsemiFinals
+      ],
+      resultsFinals: [
+        ...this.getUpdates(resJSON, "final"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newFinals
+      ],
+      resultsPlayoff: [
+        ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),*/  ...newPlayoff
+      ]
+    }
+
+    console.log("Setting state...");
+
+    this.setState(newState);
+
+    console.log("DONE");
   }
 
   render() {
@@ -185,7 +223,7 @@ class App extends Component<any, {
       <div className="App">
         <div className="header">
           <h1>Tube Lines World Cup:</h1>
-          <h5>Updated every 20 secs. Please view in landscape.</h5>
+          <h5>Updated every 60 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
         <h3>Quarterfinals:</h3>
@@ -210,9 +248,19 @@ class App extends Component<any, {
         
         <Container>
           <Row>
-            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout ]} history={this.state.resultsHistories} />
+            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals ]} history={this.state.resultsHistories} />
           </Row>
         </Container>
+
+        <h3>Upcoming Semifinals:</h3>
+        <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
+
+        <h3>3rd/4th Playoff:</h3>
+        <ResultsTable results={this.state.resultsPlayoff} allowVenues />
+
+        <h3>THE FINAL:</h3>
+        <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
+        { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
 
         <h3>Knockout stage results:</h3>
         <ResultsTable results={this.state.resultsKnockout} />
@@ -221,7 +269,7 @@ class App extends Component<any, {
         <Container>
             {
              this.state.pairedPastGames.map(([game1, game2]) => {
-               console.log(game1);
+               //console.log(game1);
                return (
                <Row>
                    <Graphs results={typeof game2 !== "undefined" ? [game1, game2] : [game1]} history={this.state.resultsHistories} isToday={false}/>

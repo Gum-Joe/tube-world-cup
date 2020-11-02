@@ -45,8 +45,24 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 							}
 						})
 
-						console.log(result.one.name);
-						console.log(result.two.name);
+					/*let oneVotesPercent = historydata.results.map((resultHere) => {
+						//console.log(resultHere.time - historydata.startTime);
+						return {
+							x: (resultHere.timestamp - historydata.results[0].timestamp) / 1000 / 60 / 60,
+							y: ((resultHere.votes.one / (resultHere.votes.one + resultHere.votes.two)) * 100) || 0
+						}
+					});
+
+					let twoVotesPercent = historydata.results.map((resultHere) => {
+						//console.log(resultHere.time - historydata.startTime);
+						return {
+							x: (resultHere.timestamp - historydata.results[1].timestamp) / 1000 / 60 / 60,
+							y: ((resultHere.votes.two / (resultHere.votes.one + resultHere.votes.two)) * 100) || 0
+						}
+					});*/
+
+						//console.log(result.one.name);
+						//console.log(result.two.name);
 			
 						return (
 							<>
@@ -107,6 +123,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										/>
 									</VictoryChart>
 								</Col>
+
 								{/*BEGIN LINES */}
 								<Col sm md lg>
 									<VictoryChart
@@ -131,6 +148,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 									>
 										<VictoryAxis
 											dependentAxis
+											key={0}
 											label="Votes"
 											fixLabelOverlap
 											style={{

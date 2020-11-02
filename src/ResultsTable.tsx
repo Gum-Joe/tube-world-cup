@@ -22,6 +22,7 @@ const ResultsTable: React.FunctionComponent<{
 					<th>Votes</th>
 					<th>%</th>
 					<th>∆</th>
+					<th>Total</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,6 +43,7 @@ const ResultsTable: React.FunctionComponent<{
 									"backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
 								}} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
 								<td>{result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}</td>
+								<td>{result.one.votes + result.two.votes}</td>
 							</tr>
 						)
 					})
