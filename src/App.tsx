@@ -190,19 +190,19 @@ class App extends Component<any, {
     const res = await fetch("https://api.davwheat.dev/getpolls");
     const resJSON = await res.json();
 
-    //const newsemiFinals: StateInfo[] = [this.getUpdatesOld(semifinals[0]), this.getUpdatesOld(semifinals[1])];
+    const newsemiFinals: StateInfo[] = [/*this.getUpdatesOld(semifinals[0]), */this.getUpdatesOld(semifinals[0])];
 
-    //const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
+    const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
 
-    //const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
-    const newsemiFinals = [];
-const newFinals = [];
-const newPlayoff = [];
+    const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
+    //const newsemiFinals = [];
+//const newFinals = [];
+//const newPlayoff = [];
     const newState = {
       resultsKnockout: this.getUpdates(resJSON, "knockout"),
       resultsQFinals: this.getUpdates(resJSON, "quarter"),
       resultsSemiFinals: [
-        ...this.getUpdates(resJSON, "semi"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newsemiFinals
+        ...this.getUpdates(resJSON, "semi"), ...this.getUpdates(resJSON, "unknown"), ...newsemiFinals
       ],
       resultsFinals: [
         ...this.getUpdates(resJSON, "final"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newFinals

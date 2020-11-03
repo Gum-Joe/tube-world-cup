@@ -128,14 +128,14 @@ export const semifinals = [
     DEVNULL,
     "false",
     "Shadwell"
-  ],*/
+  ]
   [
     "Jubilee",
     "Thameslink",
     DEVNULL,
     "false",
     "West Hampstead"
-  ],
+  ],*/
   [
     "Victoria",
     "DLR",
