@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/tube-world-cup/static/css/main.56e89b54.chunk.css",
-    "main.js": "/tube-world-cup/static/js/main.0b56b04a.chunk.js",
-    "main.js.map": "/tube-world-cup/static/js/main.0b56b04a.chunk.js.map",
-    "runtime-main.js": "/tube-world-cup/static/js/runtime-main.63956cb3.js",
-    "runtime-main.js.map": "/tube-world-cup/static/js/runtime-main.63956cb3.js.map",
+    "main.js": "/tube-world-cup/static/js/main.c3580bb6.chunk.js",
+    "main.js.map": "/tube-world-cup/static/js/main.c3580bb6.chunk.js.map",
+    "runtime-main.js": "/tube-world-cup/static/js/runtime-main.dad27332.js",
+    "runtime-main.js.map": "/tube-world-cup/static/js/runtime-main.dad27332.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/tube-world-cup/static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.e46c591a.chunk.js": "/tube-world-cup/static/js/2.e46c591a.chunk.js",
-    "static/js/2.e46c591a.chunk.js.map": "/tube-world-cup/static/js/2.e46c591a.chunk.js.map",
-    "static/js/3.0365a5cf.chunk.js": "/tube-world-cup/static/js/3.0365a5cf.chunk.js",
-    "static/js/3.0365a5cf.chunk.js.map": "/tube-world-cup/static/js/3.0365a5cf.chunk.js.map",
+    "static/js/2.4ddd79da.chunk.js": "/tube-world-cup/static/js/2.4ddd79da.chunk.js",
+    "static/js/2.4ddd79da.chunk.js.map": "/tube-world-cup/static/js/2.4ddd79da.chunk.js.map",
+    "static/js/3.e790c796.chunk.js": "/tube-world-cup/static/js/3.e790c796.chunk.js",
+    "static/js/3.e790c796.chunk.js.map": "/tube-world-cup/static/js/3.e790c796.chunk.js.map",
     "index.html": "/tube-world-cup/index.html",
     "static/css/2.20aa2d7b.chunk.css.map": "/tube-world-cup/static/css/2.20aa2d7b.chunk.css.map",
     "static/css/main.56e89b54.chunk.css.map": "/tube-world-cup/static/css/main.56e89b54.chunk.css.map",
-    "static/js/2.e46c591a.chunk.js.LICENSE.txt": "/tube-world-cup/static/js/2.e46c591a.chunk.js.LICENSE.txt"
+    "static/js/2.4ddd79da.chunk.js.LICENSE.txt": "/tube-world-cup/static/js/2.4ddd79da.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.63956cb3.js",
+    "static/js/runtime-main.dad27332.js",
     "static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.e46c591a.chunk.js",
+    "static/js/2.4ddd79da.chunk.js",
     "static/css/main.56e89b54.chunk.css",
-    "static/js/main.0b56b04a.chunk.js"
+    "static/js/main.c3580bb6.chunk.js"
   ]
 }
