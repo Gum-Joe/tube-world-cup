@@ -223,7 +223,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										/>
 										<VictoryLine
 											style={{
-												data: { stroke: colours[result.one.name], strokeWidth: 5 },
+												data: { stroke: colours[result.one.name], strokeWidth: 3 },
 												parent: { border: "1px solid #ccc" },
 												labels: {
 													fill: colours[result.one.name]
@@ -233,7 +233,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										/>
 										<VictoryLine
 											style={{
-												data: { stroke: colours[result.two.name], strokeWidth: 5 },
+												data: { stroke: colours[result.two.name], strokeWidth: 3 },
 												parent: { border: "1px solid #ccc" },
 												labels: {
 													fill: colours[result.two.name]
