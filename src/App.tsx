@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import './App.css';
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Col, Container, Row, Table, Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
@@ -9,6 +9,9 @@ import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, c
 import ResultsTable from "./ResultsTable";
 import Graphs from "./Graphs";
 import ResultsTableCompact from "./ResultsTableCompact";
+import CookieConsent from "react-cookie-consent";
+import gaSetState, { GA_DISABLE_COOKIE_STR, GA_PROPERTY } from "./gaAnlalystics";
+import ReactGA from "react-ga";
 
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
@@ -74,6 +77,23 @@ class App extends Component<any, {
     this.setState({
       pairedPastGames,
     });
+  }
+
+  setGaAnalytics() {
+    /*if (document.cookie.indexOf(`${GA_DISABLE_COOKIE_STR}=false`) > -1) {
+      console.log("Set GA");
+      // @ts-ignore
+      window.dataLayer = window.dataLayer || [];
+      // @ts-ignore
+      const gtag = (arg1: any, arg2: any) => { window.dataLayer.push([arg1, arg2]); }
+      gtag('js', new Date());
+      gtag('config', GA_PROPERTY);
+    }*/
+  }
+
+  componentWillMount() {
+    // Disable GA tracking
+    this.setGaAnalytics();
   }
 
   componentDidMount() {
@@ -280,6 +300,23 @@ class App extends Component<any, {
             }
         </Container>
 
+        {/* Cookie stuff */}
+        <Navbar fixed="bottom">
+          <CookieConsent
+            enableDeclineButton
+            declineButtonText="No thanks"
+            onAccept={
+              () => { gaSetState(false); window.location.reload(); }
+            }
+            onDecline={
+              () => { gaSetState(true); window.location.reload(); }
+            }
+          >
+            This website uses cookies (via Google Analytics) for analytics.
+            <a href={process.env.PUBLIC_URL + "/privacy.html"}>View Privacy Policy</a>
+          </CookieConsent>
+        </Navbar>
+
         <footer>
           <Container>
             Created by @k_sam_mighty for <a href="https://twitter.com/geofftech">Geoff Marshall's</a> World Cup of Tube Lines.<br/>
@@ -288,11 +325,12 @@ class App extends Component<any, {
             <a href="hhttps://twitter.com/official_gumjoe"><FontAwesomeIcon icon={faTwitter} /> @official_gumjoe</a> <br />
             <a href="https://www.instagram.com/k_sam_mighty"><FontAwesomeIcon icon={faInstagram} /> @k_sam_mighty</a> <br />
             <a href="https://www.youtube.com/channel/UCIwdVs7v-WL7_5erRzNv6sw"><FontAwesomeIcon icon={faYoutube} /> Gum Joe</a>
-            <br />
-            Special thanks to <a href="https://github.com/davwheat">@davwheat</a> for the API, and <a href="https://twitter.com/_FlaiFlai">@_FlaiFlai</a> for the original API.
+            <br />Special thanks to <a href="https://github.com/davwheat">@davwheat</a> for the API, and <a href="https://twitter.com/_FlaiFlai">@_FlaiFlai</a> for the original API.
             <br />Thank you to all the memebers of the community who contributed ideas!
+            <br /><a href={process.env.PUBLIC_URL + "/privacy.html"}>View Privacy Policy</a>
           </Container>
         </footer>
+
       </div>
     );
   }
