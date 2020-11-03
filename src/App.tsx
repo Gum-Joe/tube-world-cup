@@ -19,7 +19,7 @@ const venueMap: { [key: string]: string } = {
   "quarterb1": "King's Cross",
   "quarterb2": "Shadwell",
   "semia1": "West Hampstead",
-  "semib1": "???",
+  "semib1": "Aldwych Disused",
   "final": "???",
   "playoff": "???"
 }
@@ -248,8 +248,9 @@ class App extends Component<any, {
           <h5>Updated every 60 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
-        <h3>Quarterfinals:</h3>
-        <ResultsTable results={this.state.resultsQFinals} allowVenues />
+
+        <h3>Semifinals:</h3>
+        <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
         
         
         <h3>Today's games:</h3>
@@ -274,15 +275,15 @@ class App extends Component<any, {
           </Row>
         </Container>
 
-        <h3>Upcoming Semifinals:</h3>
-        <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
-
         <h3>3rd/4th Playoff:</h3>
-        <ResultsTable results={this.state.resultsPlayoff} allowVenues />
+        <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
 
         <h3>THE FINAL:</h3>
         <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
         { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
+
+        <h3>Quarterfinal Results:</h3>
+        <ResultsTable results={this.state.resultsQFinals} allowVenues />
 
         <h3>Knockout stage results:</h3>
         <ResultsTable results={this.state.resultsKnockout} />
