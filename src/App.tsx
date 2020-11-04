@@ -222,7 +222,7 @@ class App extends Component<any, {
       resultsKnockout: this.getUpdates(resJSON, "knockout"),
       resultsQFinals: this.getUpdates(resJSON, "quarter"),
       resultsSemiFinals: [
-        ...this.getUpdates(resJSON, "semi"), ...this.getUpdates(resJSON, "unknown"), ...newsemiFinals
+        ...this.getUpdates(resJSON, "semi"), ...this.getUpdates(resJSON, "unknown")
       ],
       resultsFinals: [
         ...this.getUpdates(resJSON, "final"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newFinals
