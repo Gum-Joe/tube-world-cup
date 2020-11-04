@@ -210,7 +210,7 @@ class App extends Component<any, {
     const res = await fetch("https://api.davwheat.dev/getpolls");
     const resJSON = await res.json();
 
-    const newsemiFinals: StateInfo[] = [/*this.getUpdatesOld(semifinals[0]), */this.getUpdatesOld(semifinals[0])];
+    //const newsemiFinals: StateInfo[] = [/*this.getUpdatesOld(semifinals[0]), */this.getUpdatesOld(semifinals[0])];
 
     const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
 
