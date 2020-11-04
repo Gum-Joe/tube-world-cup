@@ -222,13 +222,13 @@ class App extends Component<any, {
       resultsKnockout: this.getUpdates(resJSON, "knockout"),
       resultsQFinals: this.getUpdates(resJSON, "quarter"),
       resultsSemiFinals: [
-        ...this.getUpdates(resJSON, "semi"), ...this.getUpdates(resJSON, "unknown")
+        ...this.getUpdates(resJSON, "semi") /*...this.getUpdates(resJSON, "unknown")*/
       ],
       resultsFinals: [
         ...this.getUpdates(resJSON, "final"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newFinals
       ],
       resultsPlayoff: [
-        ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),*/  ...newPlayoff
+        ...this.getUpdates(resJSON, "playoff"), ...this.getUpdates(resJSON, "unknown"),  ...newPlayoff
       ]
     }
 
@@ -248,16 +248,15 @@ class App extends Component<any, {
           <h5>Updated every 60 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
-
-        <h3>Semifinals:</h3>
-        <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
         
-        
+        <h3>3rd/4th Playoff:</h3>
+        <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
+      
         <h3>Today's games:</h3>
         <h6>Straight lines represent votes in the same match from previous years.</h6>
         <h6>Thin grey lines represent the difference between options.</h6>
 
-        { this.state.resultsQFinals.filter(result => result.today).map(result => {
+        { this.state.resultsPlayoff.filter(result => result.today).map(result => {
           if (typeof result.venue !== "undefined" && typeof venueQuoteMap[result.venue] !== "undefined") {
             return (
               <Container className="quotedReport">
@@ -271,16 +270,16 @@ class App extends Component<any, {
         
         <Container>
           <Row>
-            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals ]} history={this.state.resultsHistories} />
+            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff ]} history={this.state.resultsHistories} />
           </Row>
         </Container>
-
-        <h3>3rd/4th Playoff:</h3>
-        <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
-
+        
         <h3>THE FINAL:</h3>
         <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
         { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
+        
+        <h3>Semifinals Results:</h3>
+        <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
 
         <h3>Quarterfinal Results:</h3>
         <ResultsTable results={this.state.resultsQFinals} allowVenues />
