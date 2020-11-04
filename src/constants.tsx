@@ -147,7 +147,7 @@ export const semifinals = [
 
 export const finals = [
   [
-    "???",
+    "Thameslink",
     "???",
     DEVNULL,
     "???",
@@ -156,7 +156,7 @@ export const finals = [
 ];
 export const playoff = [
   [
-    "???",
+    "Jubilee",
     "???",
     DEVNULL,
     "???",
