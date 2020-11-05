@@ -21,7 +21,7 @@ const venueMap: { [key: string]: string } = {
   "semia1": "West Hampstead",
   "semib1": "Aldwych Disused",
   "final": "???",
-  "playoff": "???"
+  "playoff": "Green Park"
 }
 
 const venueQuoteMap: Record<string, string> = {
