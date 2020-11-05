@@ -15,10 +15,13 @@ code {
 .App {
   background-color: #ffffff;
   color: rgb(0, 25, 168);
+  /*background-color: #35557B;
+  color: #ffffff;*/
 }
 
 table {
   color: rgb(0, 25, 168) !important;
+  /*color: #ffffff !important;*/
 }
 
 html, body, #root, .App {

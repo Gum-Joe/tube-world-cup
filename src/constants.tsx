@@ -164,6 +164,24 @@ export const playoff = [
   ],
 ];
 
+export const BLANK_RESULT = {
+  gameName: "???",
+  one: {
+    name: "???",
+    votes: 0,
+    className: "unknown",
+  },
+  two: {
+    name: "???",
+    votes: 0,
+    className: "unknown",
+  },
+  winner: "???",
+  link: undefined,
+  today: true,
+  venue: "???",
+}
+
 export interface StateInfo {
   gameName: string;
   one: {

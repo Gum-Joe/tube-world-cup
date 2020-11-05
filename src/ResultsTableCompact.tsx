@@ -45,6 +45,7 @@ const ResultsTableCompact: React.FunctionComponent<{
 								</Col>
 								<Col lg={2} className={"compact-headers"}>
 									<h6 className={"align-middle"}>
+									Venue: {result.venue}<br />
 									Difference: {result.one.votes > result.two.votes ? result.one.votes - result.two.votes : result.two.votes - result.one.votes}<br />
                 	Total: {result.one.votes + result.two.votes}<br />
                 	Vote here: <a href={result.link}>Link</a>

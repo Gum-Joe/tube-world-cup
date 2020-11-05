@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
 import { faGithub, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, semifinals, playoff, finals } from "./constants";
+import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, semifinals, playoff, finals, BLANK_RESULT } from "./constants";
 import ResultsTable from "./ResultsTable";
 import Graphs from "./Graphs";
 import ResultsTableCompact from "./ResultsTableCompact";
 import CookieConsent from "react-cookie-consent";
 import gaSetState, { GA_DISABLE_COOKIE_STR, GA_PROPERTY } from "./gaAnlalystics";
-import ReactGA from "react-ga";
+import RankTable from "./RankTable";
 
 const venueMap: { [key: string]: string } = {
   "quartera1": "Waterloo",
@@ -214,7 +214,7 @@ class App extends Component<any, {
 
     const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
 
-    const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
+    //const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
     //const newsemiFinals = [];
 //const newFinals = [];
 //const newPlayoff = [];
@@ -225,10 +225,10 @@ class App extends Component<any, {
         ...this.getUpdates(resJSON, "semi") /*...this.getUpdates(resJSON, "unknown")*/
       ],
       resultsFinals: [
-        ...this.getUpdates(resJSON, "final"), /*...this.getUpdates(resJSON, "unknown"),*/ ...newFinals
+        ...this.getUpdates(resJSON, "final"), ...this.getUpdates(resJSON, "unknown"), ...newFinals
       ],
       resultsPlayoff: [
-        ...this.getUpdates(resJSON, "playoff"), ...this.getUpdates(resJSON, "unknown"),  ...newPlayoff
+        ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),  ...newPlayoff*/
       ]
     }
 
@@ -248,9 +248,10 @@ class App extends Component<any, {
           <h5>Updated every 60 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
-        
-        <h3>3rd/4th Playoff:</h3>
-        <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
+
+        <h3><b>The Final</b></h3>
+        <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
+        { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
       
         <h3>Today's games:</h3>
         <h6>Straight lines represent votes in the same match from previous years.</h6>
@@ -273,10 +274,12 @@ class App extends Component<any, {
             <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff ]} history={this.state.resultsHistories} />
           </Row>
         </Container>
-        
-        <h3>THE FINAL:</h3>
-        <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
-        { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
+
+        <h2>Rankings:</h2>
+        <RankTable final={this.state.resultsFinals[0] || BLANK_RESULT} playoff={this.state.resultsPlayoff[0] || BLANK_RESULT}/>
+
+        <h3>3rd/4th Playoff:</h3>
+        <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
         
         <h3>Semifinals Results:</h3>
         <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
