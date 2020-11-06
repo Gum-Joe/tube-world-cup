@@ -20,7 +20,7 @@ const venueMap: { [key: string]: string } = {
   "quarterb2": "Shadwell",
   "semia1": "West Hampstead",
   "semib1": "Aldwych Disused",
-  "final": "???",
+  "final": "Greenwich",
   "playoff": "Green Park"
 }
 
@@ -212,7 +212,7 @@ class App extends Component<any, {
 
     //const newsemiFinals: StateInfo[] = [/*this.getUpdatesOld(semifinals[0]), */this.getUpdatesOld(semifinals[0])];
 
-    const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
+    //const newFinals: StateInfo[] = [this.getUpdatesOld(finals[0])];
 
     //const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
     //const newsemiFinals = [];
@@ -225,7 +225,7 @@ class App extends Component<any, {
         ...this.getUpdates(resJSON, "semi") /*...this.getUpdates(resJSON, "unknown")*/
       ],
       resultsFinals: [
-        ...this.getUpdates(resJSON, "final"), ...this.getUpdates(resJSON, "unknown"), ...newFinals
+        ...this.getUpdates(resJSON, "final"), ...this.getUpdates(resJSON, "unknown"), /*...newFinals*/
       ],
       resultsPlayoff: [
         ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),  ...newPlayoff*/
