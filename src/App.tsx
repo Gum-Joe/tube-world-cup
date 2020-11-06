@@ -271,7 +271,7 @@ class App extends Component<any, {
         
         <Container>
           <Row>
-            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff ]} history={this.state.resultsHistories} />
+            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff, ...this.state.resultsFinals ]} history={this.state.resultsHistories} />
           </Row>
         </Container>
 
