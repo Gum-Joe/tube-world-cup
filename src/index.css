@@ -123,3 +123,8 @@ tr {
   font-size: 1.1rem;
   text-align: left;
 }
+
+.graphs-close {
+  width: 100% !important;
+  max-width: 80% !important;
+}

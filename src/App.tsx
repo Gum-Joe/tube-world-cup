@@ -25,7 +25,8 @@ const venueMap: { [key: string]: string } = {
 }
 
 const venueQuoteMap: Record<string, string> = {
-  "Waterloo": "BREAKING: A reporter for the Geoff Broadcasting Corporation (GBC), at Waterloo, has informed us that \"a socially distanced crowd wearing face coverings has turned up at the Waterloo ticket hall concourse to see this highly anticipated match\""
+  "Waterloo": "BREAKING: A reporter for the Geoff Broadcasting Corporation (GBC), at Waterloo, has informed us that \"a socially distanced crowd wearing face coverings has turned up at the Waterloo ticket hall concourse to see this highly anticipated match\"",
+  "Greenwich": "BREAKING: Joe-Wheatley pollsters, runners of this site, have decided as of 14:30 today to call (project) the winner as the DLR."
 }
 
 
@@ -239,6 +240,10 @@ class App extends Component<any, {
     console.log("DONE");
   }
 
+  /*getSpaceRatio() {
+    return (screen.availWidth - (window.outerWidth - window.innerWidth)) / (screen.availHeight - (window.outerHeight - window.innerHeight));
+  }*/
+
   render() {
 
     return (
@@ -257,7 +262,7 @@ class App extends Component<any, {
         <h6>Straight lines represent votes in the same match from previous years.</h6>
         <h6>Thin grey lines represent the difference between options.</h6>
 
-        { this.state.resultsPlayoff.filter(result => result.today).map(result => {
+        { this.state.resultsFinals.filter(result => result.today).map(result => {
           if (typeof result.venue !== "undefined" && typeof venueQuoteMap[result.venue] !== "undefined") {
             return (
               <Container className="quotedReport">
@@ -269,9 +274,9 @@ class App extends Component<any, {
           }
         }) }
         
-        <Container>
+        <Container className="graphs-close">
           <Row>
-            <Graphs results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff, ...this.state.resultsFinals ]} history={this.state.resultsHistories} />
+            <Graphs close results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff, ...this.state.resultsFinals ]} history={this.state.resultsHistories} />
           </Row>
         </Container>
 

@@ -7,11 +7,14 @@ interface GraphProps {
 	results: StateInfo[],
 	history: Record<string, ResultHistories>,
 	isToday?: boolean,
+	close?: boolean,
+	long?: boolean
 }
 
 
 const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
+const LONG_PROP_SCALE_FACTOR = 1.35;
 const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 	return (
 			<>
@@ -72,7 +75,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										domainPadding={{ x: 100 }}
 										categories={{ x: [result.one.name, result.two.name] }}
 										height={350}
-										width={500}
+										width={props.long ? 500 * LONG_PROP_SCALE_FACTOR : 500}
 										padding={{
 											top:0,
 											bottom: 80,
@@ -129,7 +132,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 									<VictoryChart
 										theme={VictoryTheme.material}
 										height={350 * 1.5 - 50}
-										width={750}
+										width={props.long ? 750 * LONG_PROP_SCALE_FACTOR : 750}
 										domainPadding={{ y: 100 }}
 										padding={{
 											top: 0,
@@ -177,7 +180,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 												<VictoryLine
 													name={result.one.name}
 													style={{
-														data: { stroke: colours["DLR"], strokeWidth: 3 },
+														data: { stroke: colours["DLR"], strokeWidth: props.close ? 2 : 4 },
 														parent: { border: "1px solid #ccc" },
 													}}
 													data={[
@@ -223,7 +226,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										/>
 										<VictoryLine
 											style={{
-												data: { stroke: colours[result.one.name], strokeWidth: 3 },
+												data: { stroke: colours[result.one.name], strokeWidth: props.close ? 2.5 : 4 },
 												parent: { border: "1px solid #ccc" },
 												labels: {
 													fill: colours[result.one.name]
@@ -233,7 +236,7 @@ const Graphs: React.FunctionComponent<GraphProps> = (props) => {
 										/>
 										<VictoryLine
 											style={{
-												data: { stroke: colours[result.two.name], strokeWidth: 3 },
+												data: { stroke: colours[result.two.name], strokeWidth: props.close ? 2.5 : 4 },
 												parent: { border: "1px solid #ccc" },
 												labels: {
 													fill: colours[result.two.name]
