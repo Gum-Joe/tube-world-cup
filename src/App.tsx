@@ -255,7 +255,7 @@ class App extends Component<any, {
         </div>
 
         <h3><b>The Final</b></h3>
-        <ResultsTableCompact results={this.state.resultsFinals} allowVenues />
+        <ResultsTableCompact close results={this.state.resultsFinals} allowVenues />
         { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
       
         <h3>Today's games:</h3>

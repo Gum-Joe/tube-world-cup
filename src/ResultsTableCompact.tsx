@@ -8,7 +8,11 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 const ResultsTableCompact: React.FunctionComponent<{
 	results: StateInfo[],
 	allowVenues?: boolean,
+	close?: boolean,
 }> = (props) => {
+
+	const PERCENT_DP = props.close ? 2 : 1;
+
 	return (
 		<Container>
 			{
@@ -30,15 +34,15 @@ const ResultsTableCompact: React.FunctionComponent<{
 												<td className={result.one.className}>{result.one.name} {result.winner === 1 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
 												<td>{result.one.votes}</td>
 												<td style={{
-													"backgroundSize": `100% ${((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-												}} className={result.one.className}>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
+													"backgroundSize": `100% ${((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(PERCENT_DP)}%`
+												}} className={result.one.className}>{((result.one.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(PERCENT_DP)}%</td>
 											</tr>
 											<tr>
 												<td className={result.two.className}>{result.two.name} {result.winner === 2 ? <FontAwesomeIcon icon={faCheckCircle} /> : ""}</td>
 												<td>{result.two.votes}</td>
 												<td style={{
-													"backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%`
-												}} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(1)}%</td>
+													"backgroundSize": `100% ${((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(PERCENT_DP)}%`
+												}} className={result.two.className}>{((result.two.votes / (result.one.votes + result.two.votes) * 100) || 0).toFixed(PERCENT_DP)}%</td>
 											</tr>
 										</tbody>
 									</Table>
