@@ -26,7 +26,8 @@ const venueMap: { [key: string]: string } = {
 
 const venueQuoteMap: Record<string, string> = {
   "Waterloo": "BREAKING: A reporter for the Geoff Broadcasting Corporation (GBC), at Waterloo, has informed us that \"a socially distanced crowd wearing face coverings has turned up at the Waterloo ticket hall concourse to see this highly anticipated match\"",
-  "Greenwich": "BREAKING: Joe-Wheatley pollsters, runners of this site, have decided as of 14:30 today to call (project) the winner as the DLR."
+  //"Greenwich": "BREAKING: Joe-Wheatley pollsters, runners of this site, have decided as of 14:30 today to call (project) the winner as the DLR."
+  "Greenwich": "BREAKING: At 14:30, Joe-Wheatley polls (who run this site) projected DLR as the winner, with >200 votes between them.  As of 23:00, after a huge spike in Thameslink votes, with 500 votes between them and 6 hrs until polls close, we are now calling this for Thameslink."
 }
 
 
