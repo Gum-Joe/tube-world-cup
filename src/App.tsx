@@ -301,6 +301,14 @@ class App extends Component<any, {
 
         <h2><b>2020 Results</b></h2>
 
+        <Container className="quotedReport">
+          <h5>A message from @official_gumjoe:</h5>
+          <h5 className="text-left">
+            Thanks to everyone who helped make this site, from @davwheat_ for the API, @_FlaiFlai for the original API (which sparked me to create this site) and of course to all the members of the community who contributed ideas!
+            <br />And thanks to Geoff for putting on the Tube World Cup, and for providing the opportunity for us devs to come together to add to the experience! It's been a great 2 weeks, and I look forward to next year, where the site will return!
+          </h5>
+        </Container>
+
         <h2>Final rankings:</h2>
         <RankTable final={this.state.resultsFinals[0] || BLANK_RESULT} playoff={this.state.resultsPlayoff[0] || BLANK_RESULT} />
 
