@@ -312,14 +312,6 @@ class App extends Component<any, {
         <h2>Final rankings:</h2>
         <RankTable final={this.state.resultsFinals[0] || BLANK_RESULT} playoff={this.state.resultsPlayoff[0] || BLANK_RESULT} />
 
-        <h3>Bonus Losers Mini Tournament!</h3>
-        <ResultsTable results={this.state.resultsLoosers} />
-        <Container>
-          <Row>
-            <Graphs results={this.state.resultsLoosers} history={this.state.resultsHistories} isToday={true} />
-          </Row>
-        </Container>
-
         {/* NOTE: UNCOMMENT FOR NEXT YEAR
         <h3>Today's games:</h3>
         <h6>Straight lines represent votes in the same match from previous years.</h6>
@@ -392,9 +384,17 @@ class App extends Component<any, {
 
         <h3>3rd/4th Playoff:</h3>
         <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
-        <Container>
+        {/*<Container>
           <Row>
             <Graphs close results={this.state.resultsPlayoff} history={this.state.resultsHistories} isToday={false} />
+          </Row>
+        </Container>*/}
+
+        <h3>Bonus Losers Mini Tournament!</h3>
+        <ResultsTable results={this.state.resultsLoosers} />
+        <Container>
+          <Row>
+            <Graphs results={this.state.resultsLoosers} history={this.state.resultsHistories} isToday={false} />
           </Row>
         </Container>
         
