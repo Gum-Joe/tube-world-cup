@@ -352,7 +352,8 @@ class App extends Component<any, {
               Mean votes per poll: {this.state.meanVotes.toFixed(0)}<br />
               Maximum votes cast in one poll (the final): {typeof this.state.resultsFinals[0] !== "undefined" ? this.state.resultsFinals[0].one.votes + this.state.resultsFinals[0].two.votes : 0}<br />
               Total unique users of this site on the days of the final: 676<br />
-              Total views on the day of the final for this site: 3.3K<br /> 
+              Total views on the day of the final for this site: 3.3K<br />
+              <a href="https://twitter.com/geofftech/status/1325375626681995265">Click here to view the official Wallchart from Geoff!</a><br /> 
               <br /> 
             </Col>
           </Row>
