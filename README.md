@@ -1,4 +1,22 @@
-I hacked this together in about 1.5 hrs!
+This is the source code of the site for [Geoff Marshall's](https://twitter.com/geofftech) Tube World Cup.
+I hacked this together at first in about 1.5hrs, before iteratively improving upon it, adding the results of the other matches and graphs for the results.  Overall I think I spent 20 hrs on it.
+
+It's based on React, and was bootstrapped with Create React App.  It is served via GitHub Pages.
+
+It uses polling to fetch the results of the polls from a server written by @davwheat ([Server API](https://github.com/davwheat/world-cup-of-tube-lines-api)), which itself interfaces with the Twitter API.  The site also provides historical polling, with history from the start of polls (by scanning for Twitter polls from Geoff with the `#WorldCupTubeLines` hashtag).  I did previously write a server for this (see `node/`) but recording had to be started manually, so it was abandonded in favour of David's API.
+
+Thanks to:
+1. @davwheat
+ for his site, which is displayed just like Geoff's sheet! https://tubecup.davwheat.dev
+ Also thanks to him for the API for the site, without him there would probably be no polling history!
+2. @_FlaiFlai
+ for the original API, which served as the spark which led me to create this site
+3. Thanks to all the members of the community who contributed ideas! I can't name you all here, but without them the site would still be a boring, simple table!  The site really has been a collabortive effort, and for that I give you all the biggest thanks - and ofc, thanks to you the voters, without which the site would have no point!
+4. @geofftech
+ for putting on the Tube World Cup, and for providing the opportunity for us devs to come together to add to the experience!
+
+
+## -------- ORIGINAL CRA Readme: --------
 
 # Getting Started with Create React App
 
