@@ -253,7 +253,7 @@ class App extends Component<any, {
         ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),  ...newPlayoff*/
       ],
       resultsLoosers: [
-        ...this.getUpdates(resJSON, "loser"), ...this.getUpdates(resJSON, "unknown"),
+        ...this.getUpdates(resJSON, "mini"), ...this.getUpdates(resJSON, "unknown"),
       ]
     }
 
