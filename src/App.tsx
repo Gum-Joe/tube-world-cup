@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import './App.css';
 import { Col, Container, Row, Table, Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { VictoryChart, VictoryTheme, VictoryBar, VictoryLabel, VictoryAxis, VictoryLine, VictoryVoronoiContainer, VictoryTooltip, VictoryZoomContainer, VictoryContainer, createContainer } from "victory";
 import { faGithub, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, semifinals, playoff, finals, BLANK_RESULT } from "./constants";
+import { StateInfo, ResultHistories, REALTIME_RESULTS, DavidAPI, tweetNameMap, classes, DEVNULL, semifinals, playoff, finals, BLANK_RESULT, POLL_RESULT_URL, getJSONLinkByYear } from "./constants";
 import ResultsTable from "./ResultsTable";
 import Graphs from "./Graphs";
 import ResultsTableCompact from "./ResultsTableCompact";
@@ -29,8 +27,6 @@ const venueQuoteMap: Record<string, string> = {
   //"Greenwich": "BREAKING: Joe-Wheatley pollsters, runners of this site, have decided as of 14:30 today to call (project) the winner as the DLR."
   "Greenwich": "BREAKING: At 14:30, Joe-Wheatley polls (who run this site) projected DLR as the winner, with >200 votes between them.  As of 23:00, after a huge spike in Thameslink votes, with 500 votes between them and 6 hrs until polls close, we are now calling this for Thameslink."
 }
-
-
 
 class App extends Component<any, {
   resultsKnockout: StateInfo[],
@@ -66,7 +62,9 @@ class App extends Component<any, {
 
   async updateHistory() {
     //console.log("FITOWRST");
-    const history = await fetch(REALTIME_RESULTS)
+    // NOTE: Revert back to using REALTIME_RESULTS next year
+    //const history = await fetch(REALTIME_RESULTS);
+    const history = await fetch(getJSONLinkByYear("2020").history);
     this.setState({
       resultsHistories: (await history.json())
     })
@@ -121,12 +119,13 @@ class App extends Component<any, {
   componentDidMount() {
     this.updateResults();
     this.updateHistory();
+    // NOTE: For next year readd these
     const bound = this.updateResults.bind(this);
-    setInterval(() => bound(), 60000);
+    //setInterval(() => bound(), 60000);
 
     const boundHist = this.updateHistory.bind(this);
 
-    setInterval(() => boundHist(), 60000)
+    //setInterval(() => boundHist(), 60000)
   }
 
   getUpdates(resJSON: DavidAPI[], gameString: string): StateInfo[] {
@@ -229,7 +228,13 @@ class App extends Component<any, {
     console.log("UPDATING");
 
     // FETCH!
-    const res = await fetch("https://api.davwheat.dev/getpolls");
+    // NOTE: Readd the below line next year
+    /*const res = await fetch(POLL_RESULT_URL);
+    const resJSON = await res.json();*/
+
+    // 2020 results
+    // NOTE: Comment out this line next year.
+    const res = await fetch(getJSONLinkByYear("2020").results);
     const resJSON = await res.json();
 
     //const newsemiFinals: StateInfo[] = [/*this.getUpdatesOld(semifinals[0]), */this.getUpdatesOld(semifinals[0])];
@@ -238,8 +243,9 @@ class App extends Component<any, {
 
     //const newPlayoff: StateInfo[] = [this.getUpdatesOld(playoff[0])];
     //const newsemiFinals = [];
-//const newFinals = [];
-//const newPlayoff = [];
+    //const newFinals = [];
+    //const newPlayoff = [];
+
     const newState = {
       resultsKnockout: this.getUpdates(resJSON, "knockout"),
       resultsQFinals: this.getUpdates(resJSON, "quarter"),

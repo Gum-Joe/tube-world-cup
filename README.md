@@ -15,6 +15,7 @@ Thanks to:
 4. @geofftech
  for putting on the Tube World Cup, and for providing the opportunity for us devs to come together to add to the experience!
 
+JSON copies of results can be found in `public/results/year`, e.g. `public/results/2020`
 
 ## -------- ORIGINAL CRA Readme: --------
 

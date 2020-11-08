@@ -1,4 +1,13 @@
 export const REALTIME_RESULTS = "https://api.davwheat.dev/fullhistory";
+/** Default URL used to fetch poll results */
+export const POLL_RESULT_URL = "https://api.davwheat.dev/getpolls";
+/** @returns the URL to fetch results from for the TUbe World Cup for a given year */
+export function getJSONLinkByYear(year: string) {
+  return {
+    results: process.env.PUBLIC_URL + `/results/${year}/results.json`,
+    history: process.env.PUBLIC_URL + `/results/${year}/fullhistory.json`
+  }
+}
 export const classes: { [key: string]: string; } = {
   "Bakerloo": "bakerloo",
   "Northern": "northern",
