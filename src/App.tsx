@@ -384,19 +384,19 @@ class App extends Component<any, {
 
         <h3>3rd/4th Playoff:</h3>
         <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
-        {/*<Container>
+        <Container>
           <Row>
             <Graphs close results={this.state.resultsPlayoff} history={this.state.resultsHistories} isToday={false} />
           </Row>
-        </Container>*/}
+        </Container>
 
         <h3>Bonus Losers Mini Tournament!</h3>
         <ResultsTable results={this.state.resultsLoosers} />
-        <Container>
+        {/*<Container>
           <Row>
             <Graphs results={this.state.resultsLoosers} history={this.state.resultsHistories} isToday={false} />
           </Row>
-        </Container>
+        </Container>*/}
         
         <h3>Semifinals Results:</h3>
         <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
