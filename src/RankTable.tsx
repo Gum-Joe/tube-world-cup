@@ -11,7 +11,7 @@ const RankingTableEntry: React.FunctionComponent<{ result: StateInfo, index: 0 |
 			<td className={resultHere.className}>{props.actualRank}</td>
 			<td className={resultHere.className}>{resultHere.name}</td>
 			<td className={resultHere.className}>{resultHere.votes}</td>
-			<td className={resultHere.className}>{((resultHere.votes / (resultHere.votes + other.votes) * 100) || 0).toFixed(1)}%</td>
+			<td className={resultHere.className}>{((resultHere.votes / (resultHere.votes + other.votes) * 100) || 0).toFixed(2)}%</td>
 		</tr>
 	)
 }

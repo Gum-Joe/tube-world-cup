@@ -28,11 +28,13 @@ export const tweetNameMap: { [key: string]: string; } = {
   "Circle Line": "Circle",
   "Thameslink": "Thameslink",
   "Hammersmith & City Line": "H&C",
+  "Hammersmith & City": "H&C",
   "Victoria Line": "Victoria",
   "Metropolitan Line": "Metropolitan",
   "Trams": "Trams",
   "London Overground": "Overground",
   "Cable Car": "CableCar",
+  "CableCar": "CableCar",
   "DLR": "DLR",
   "Piccadilly Line": "Piccadilly",
 };

@@ -8,7 +8,7 @@ interface GraphProps {
 	history: Record<string, ResultHistories>,
 	isToday?: boolean,
 	close?: boolean,
-	long?: boolean
+	long?: boolean,
 }
 
 

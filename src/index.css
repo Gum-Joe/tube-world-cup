@@ -128,3 +128,7 @@ tr {
   width: 100% !important;
   max-width: 80% !important;
 }
+
+.text-left {
+  text-align: left;
+}

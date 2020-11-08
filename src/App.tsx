@@ -36,10 +36,14 @@ class App extends Component<any, {
   resultsKnockout: StateInfo[],
   resultsQFinals: StateInfo[],
   resultsSemiFinals: StateInfo[],
-  resultsHistories: Record<string, ResultHistories>,
-  pairedPastGames: Array<[StateInfo, StateInfo | undefined]>,
   resultsFinals: StateInfo[],
   resultsPlayoff: StateInfo[],
+  resultsLoosers: StateInfo[],
+  resultsHistories: Record<string, ResultHistories>,
+  pairedPastGames: Array<[StateInfo, StateInfo | undefined]>,
+  totalVotes: number,
+  meanVotes: number,
+  pairedPastGamesQFinals: Array<[StateInfo, StateInfo | undefined]>,
 }> {
 
   constructor(props: any) {
@@ -50,9 +54,13 @@ class App extends Component<any, {
       resultsQFinals: [],
       resultsHistories: {},
       pairedPastGames: [],
+      pairedPastGamesQFinals: [],
       resultsSemiFinals: [],
       resultsFinals: [],
       resultsPlayoff: [],
+      resultsLoosers: [],
+      totalVotes: 0,
+      meanVotes: 0,
     }
   }
 
@@ -66,7 +74,7 @@ class App extends Component<any, {
     // Update pairs
     // Generate past games
     let pairedPastGames: Array<[StateInfo, StateInfo]> = [];
-    const filtered = [...this.state.resultsKnockout, ...this.state.resultsQFinals, ...this.state.resultsSemiFinals].filter(result => !result.today && typeof result.link !== "undefined");
+    const filtered = [...this.state.resultsKnockout].filter(result => !result.today && typeof result.link !== "undefined");
     filtered.forEach((result, index) => {
       if ((index % 2) === 0) {
         pairedPastGames.push([
@@ -75,9 +83,21 @@ class App extends Component<any, {
         ])
       }
     });
+
+    let pairedPastGamesQFinals: Array<[StateInfo, StateInfo]> = [];
+    const filteredQFinals = [...this.state.resultsQFinals].filter(result => !result.today && typeof result.link !== "undefined");
+    filteredQFinals.forEach((result, index) => {
+      if ((index % 2) === 0) {
+        pairedPastGamesQFinals.push([
+          result,
+          filteredQFinals[index + 1],
+        ])
+      }
+    });
     //console.log(pairedPastGames);
     this.setState({
       pairedPastGames,
+      pairedPastGamesQFinals
     });
   }
 
@@ -227,10 +247,13 @@ class App extends Component<any, {
         ...this.getUpdates(resJSON, "semi") /*...this.getUpdates(resJSON, "unknown")*/
       ],
       resultsFinals: [
-        ...this.getUpdates(resJSON, "final"), ...this.getUpdates(resJSON, "unknown"), /*...newFinals*/
+        ...this.getUpdates(resJSON, "final"), /* ...this.getUpdates(resJSON, "unknown"), */ /*...newFinals*/
       ],
       resultsPlayoff: [
         ...this.getUpdates(resJSON, "playoff"), /*...this.getUpdates(resJSON, "unknown"),  ...newPlayoff*/
+      ],
+      resultsLoosers: [
+        ...this.getUpdates(resJSON, "loser"), ...this.getUpdates(resJSON, "unknown"),
       ]
     }
 
@@ -239,6 +262,27 @@ class App extends Component<any, {
     this.setState(newState);
 
     console.log("DONE");
+
+    // Calculation!
+    // Join by ref to prevent mass memeory copy
+    const joined = [
+      this.state.resultsKnockout,
+      this.state.resultsQFinals,
+      this.state.resultsSemiFinals,
+      this.state.resultsFinals,
+      this.state.resultsPlayoff,
+      // this.state.resultsLoosers,
+    ];
+    const numberPoll = joined.reduce((accumulator, currentResult) => accumulator + currentResult.length, 0);
+    const totalVotes = joined.reduce(
+      (accumulator, currentResults) => accumulator + currentResults.reduce((acc, currentResult) => currentResult.one.votes + currentResult.two.votes, 0),
+      0
+    );
+
+    this.setState({
+      totalVotes: totalVotes,
+      meanVotes: (totalVotes / numberPoll),
+    });
   }
 
   /*getSpaceRatio() {
@@ -250,15 +294,25 @@ class App extends Component<any, {
     return (
       <div className="App">
         <div className="header">
-          <h1>Tube Lines World Cup:</h1>
+          <h1><b>Tube Lines World Cup</b></h1>
           <h5>Updated every 60 secs. Please view in landscape.</h5>
           <h6>Note: if no votes are showing, the API this site uses has gone down and should be back up in a few mins.</h6>
         </div>
 
-        <h3><b>The Final</b></h3>
-        <ResultsTableCompact close results={this.state.resultsFinals} allowVenues />
-        { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
-      
+        <h2><b>2020 Results</b></h2>
+
+        <h2>Final rankings:</h2>
+        <RankTable final={this.state.resultsFinals[0] || BLANK_RESULT} playoff={this.state.resultsPlayoff[0] || BLANK_RESULT} />
+
+        <h3>Bonus Losers Mini Tournament!</h3>
+        <ResultsTable results={this.state.resultsLoosers} />
+        <Container>
+          <Row>
+            <Graphs results={this.state.resultsLoosers} history={this.state.resultsHistories} isToday={true} />
+          </Row>
+        </Container>
+
+        {/* NOTE: UNCOMMENT FOR NEXT YEAR
         <h3>Today's games:</h3>
         <h6>Straight lines represent votes in the same match from previous years.</h6>
         <h6>Thin grey lines represent the difference between options.</h6>
@@ -273,37 +327,99 @@ class App extends Component<any, {
           } else {
             return null;
           }
-        }) }
-        
-        <Container className="graphs-close">
+        })}
+
+        <Container>
           <Row>
-            <Graphs close results={[...this.state.resultsQFinals, ...this.state.resultsKnockout, ...this.state.resultsSemiFinals, ...this.state.resultsPlayoff, ...this.state.resultsFinals ]} history={this.state.resultsHistories} />
+            <Graphs results={this.state.resultsLoosers} history={this.state.resultsHistories} />
+          </Row>
+      </Container>*/}
+
+
+        <Container>
+          <Row>
+            <Col>
+              <h3>2020 Stats</h3>
+              Total Votes Cast: {this.state.totalVotes}<br/>
+              Mean votes per poll: {this.state.meanVotes.toFixed(0)}<br />
+              Maximum votes cast in one poll (the final): {typeof this.state.resultsFinals[0] !== "undefined" ? this.state.resultsFinals[0].one.votes + this.state.resultsFinals[0].two.votes : 0}<br />
+              Total unique users of this site on the days of the final: 676<br />
+              Total views on the day of the final for this site: 3.3K<br /> 
+              <br /> 
+            </Col>
           </Row>
         </Container>
 
-        <h2>Rankings:</h2>
-        <RankTable final={this.state.resultsFinals[0] || BLANK_RESULT} playoff={this.state.resultsPlayoff[0] || BLANK_RESULT}/>
+        <h3><b>The Final</b></h3>
+        <ResultsTableCompact close results={this.state.resultsFinals} allowVenues />
+        { /*<ResultsTable results={this.state.resultsFinals} allowVenues />*/}
+        <Container>
+          <h3>How the Final played out</h3>
+          <ul className="text-left">
+            <li>The final ran over 2 days!</li>
+            <li>Even Thameslink and the DLR themselves got involved, telling people through information boards in stations and using the PA system to vote.</li>
+            <li>Throughout the first day, it was neck and neck.</li>
+            <li>The line with the lead flipped several times throughout the day, with the number of votes for each equal at times!</li>
+            <li>The difference between the two lines never exceeded 100 votes on the first day!</li>
+            <li>Towards the end of the day, the DLR had the lead, but towards the late hours of the evening Thameslink took a slender lead, which continued into the morning!</li>
+            <li>At the beginning of the 2nd day, the DLR took a slim lead</li>
+            <li>This grew to 200 votes, and at 14:30 Joe-Wheatley pollsters, runners of this site, decided to call (project) the winner as the DLR.</li>
+            <li>Yet, a late afternoon/evening push from Thameslink closed the gap, but Thameslink did not overtake the DLR.</li>
+            <li>The DLR was still the projected winner - that was, until an unexpected surge of 600 Thameslink votes came in, putting Thameslink well into the lead.</li>
+            <li>At 23:00, with 500 votes between Thameslink and the DLR and 6 hours until polls closed, Joe-Wheatley pollsters called Thameslink as the winner.  This was the eventual, final result</li>
+            <li>By 5am in the morning, when the polls closed, Thameslink was the final winner by 572 votes.</li>
+            <li>Overall, 19790 votes were cast, the most for any match and ~2.3x that cast in the 2019 final!</li>
+            <li><a href="https://twitter.com/official_gumjoe/status/1324999160706330626">You can view @official_gumjoe's Twitter megathread for the 2nd day here</a></li>
+          </ul>
+        </Container>
+
+        <h4>How the votes changed as the day progressed:</h4>
+        <Container>
+          <Row>
+            <Graphs close results={this.state.resultsFinals} history={this.state.resultsHistories} isToday={false}/>
+          </Row>
+        </Container>
+
 
         <h3>3rd/4th Playoff:</h3>
         <ResultsTableCompact results={this.state.resultsPlayoff} allowVenues />
+        <Container>
+          <Row>
+            <Graphs close results={this.state.resultsPlayoff} history={this.state.resultsHistories} isToday={false} />
+          </Row>
+        </Container>
         
         <h3>Semifinals Results:</h3>
         <ResultsTable results={this.state.resultsSemiFinals} allowVenues />
+        <Container>
+          <Row>
+            <Graphs close results={this.state.resultsSemiFinals} history={this.state.resultsHistories} isToday={false} />
+          </Row>
+        </Container>
 
         <h3>Quarterfinal Results:</h3>
         <ResultsTable results={this.state.resultsQFinals} allowVenues />
+        <Container>
+          {
+            this.state.pairedPastGamesQFinals.map(([game1, game2]) => {
+              //console.log(game1);
+              return (
+                <Row>
+                  <Graphs results={typeof game2 !== "undefined" ? [game1, game2] : [game1]} history={this.state.resultsHistories} isToday={false} />
+                </Row>)
+            })
+          }
+        </Container>
 
         <h3>Knockout stage results:</h3>
         <ResultsTable results={this.state.resultsKnockout} />
-
-        <h3>Past games:</h3>
         <Container>
             {
              this.state.pairedPastGames.map(([game1, game2]) => {
                //console.log(game1);
                return (
                <Row>
-                   <Graphs results={typeof game2 !== "undefined" ? [game1, game2] : [game1]} history={this.state.resultsHistories} isToday={false}/>
+                   <Graphs results={typeof game2 !== "undefined" ? [game1, game2] : [game1]} history={this.state.resultsHistories} isToday={false} />
                </Row>)
              })
             }
@@ -331,7 +447,7 @@ class App extends Component<any, {
             Created by @k_sam_mighty for <a href="https://twitter.com/geofftech">Geoff Marshall's</a> World Cup of Tube Lines.<br/>
             Find me (@k_sam_mighty) here:<br />
             <a href="https://github.com/Gum-Joe"><FontAwesomeIcon icon={faGithub} /> Gum-Joe</a> <br />
-            <a href="hhttps://twitter.com/official_gumjoe"><FontAwesomeIcon icon={faTwitter} /> @official_gumjoe</a> <br />
+            <a href="https://twitter.com/official_gumjoe"><FontAwesomeIcon icon={faTwitter} /> @official_gumjoe</a> <br />
             <a href="https://www.instagram.com/k_sam_mighty"><FontAwesomeIcon icon={faInstagram} /> @k_sam_mighty</a> <br />
             <a href="https://www.youtube.com/channel/UCIwdVs7v-WL7_5erRzNv6sw"><FontAwesomeIcon icon={faYoutube} /> Gum Joe</a>
             <br />Special thanks to <a href="https://github.com/davwheat">@davwheat</a> for the API, and <a href="https://twitter.com/_FlaiFlai">@_FlaiFlai</a> for the original API.
