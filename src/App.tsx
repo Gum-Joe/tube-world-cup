@@ -156,7 +156,10 @@ class App extends Component<any, {
     return filtered;
   }
 
-  // Kept around because we need it for pending 
+  /**
+   * Kept around because we need it for pending 
+   * @deprecated
+   */
   getUpdatesOld(tuple: string[]): StateInfo {
     return {
       gameName: "unknown",
